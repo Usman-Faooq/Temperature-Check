@@ -1,0 +1,12 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.TemperatureCheck" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
+        <item name="android:statusBarColor">@color/blue_dark</item>
+
+    </style>
+
+    <style name="Theme.TemperatureCheck" parent="Base.Theme.TemperatureCheck" />
+</resources>

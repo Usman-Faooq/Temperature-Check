@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_light"
+    tools:context=".activities.SignUpActivity">
+
+    <ImageView
+        android:id="@+id/backIV"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:src="@drawable/ic_back"
+        android:elevation="10dp"
+        android:padding="@dimen/_2sdp"
+        android:layout_margin="@dimen/_10sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_light"
+        tools:context=".activities.LoginActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_gravity="bottom"
+            android:paddingHorizontal="@dimen/_15sdp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_semi_bold"
+                android:textSize="@dimen/_17sdp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:textColor="@color/black"
+                android:text="Personal Info"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_medium"
+                android:textSize="@dimen/_10sdp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:textColor="@color/gray_100"
+                android:text="Enter the Personal Info below to create\nan account"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_semi_bold"
+                android:textSize="@dimen/_11sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:textColor="@color/gray_100"
+                android:text="Full Name"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_42sdp"
+                android:background="@drawable/rounded_with_gray_border"
+                android:hint="Davian Wong"
+                android:textSize="@dimen/_10sdp"
+                android:singleLine="true"
+                android:imeOptions="actionNext"
+                android:textColor="@color/black"
+                android:textColorHint="@color/border_color"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:fontFamily="@font/montserrat_medium"
+                android:paddingHorizontal="@dimen/_10sdp"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_semi_bold"
+                android:textSize="@dimen/_11sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:textColor="@color/gray_100"
+                android:text="Email address"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_42sdp"
+                android:background="@drawable/rounded_with_gray_border"
+                android:hint="davin.wong@mail.com"
+                android:textSize="@dimen/_10sdp"
+                android:singleLine="true"
+                android:imeOptions="actionNext"
+                android:textColor="@color/black"
+                android:textColorHint="@color/border_color"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:fontFamily="@font/montserrat_medium"
+                android:paddingHorizontal="@dimen/_10sdp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_semi_bold"
+                android:textSize="@dimen/_11sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:textColor="@color/gray_100"
+                android:text="Birthday"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_42sdp"
+                android:background="@drawable/rounded_with_gray_border"
+                android:hint="MM/DD/YYYY"
+                android:textSize="@dimen/_10sdp"
+                android:singleLine="true"
+                android:imeOptions="actionNext"
+                android:textColor="@color/black"
+                android:textColorHint="@color/border_color"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:fontFamily="@font/montserrat_medium"
+                android:paddingHorizontal="@dimen/_10sdp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_semi_bold"
+                android:textSize="@dimen/_11sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:textColor="@color/gray_100"
+                android:text="Phone Number"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_42sdp"
+                android:background="@drawable/rounded_with_gray_border"
+                android:hint="0000-0000-000000"
+                android:textSize="@dimen/_10sdp"
+                android:singleLine="true"
+                android:imeOptions="actionNext"
+                android:textColor="@color/black"
+                android:textColorHint="@color/border_color"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:fontFamily="@font/montserrat_medium"
+                android:paddingHorizontal="@dimen/_10sdp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_semi_bold"
+                android:textSize="@dimen/_11sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:textColor="@color/gray_100"
+                android:text="Password"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_42sdp"
+                android:background="@drawable/rounded_with_gray_border"
+                android:hint="Password"
+                android:textSize="@dimen/_10sdp"
+                android:singleLine="true"
+                android:imeOptions="actionDone"
+                android:textColor="@color/black"
+                android:textColorHint="@color/border_color"
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:fontFamily="@font/montserrat_medium"
+                android:paddingHorizontal="@dimen/_10sdp"/>
+
+            <TextView
+                android:id="@+id/signUpTV"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_42sdp"
+                android:fontFamily="@font/montserrat_medium"
+                android:textSize="@dimen/_13sdp"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:background="@drawable/rounded_button"
+                android:backgroundTint="@color/blue_light"
+                android:text="Get Started"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginBottom="@dimen/_10sdp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:textSize="@dimen/_10sdp"
+                    android:textColor="@color/gray_100"
+                    android:text="Don't have an account?"/>
+
+                <TextView
+                    android:id="@+id/loginTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_semi_bold"
+                    android:textSize="@dimen/_10sdp"
+                    android:textColor="@color/black"
+                    android:text=" Login"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

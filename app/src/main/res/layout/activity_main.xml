@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_dark"
+    tools:context=".activities.MainActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_120sdp"
+        android:layout_marginHorizontal="@dimen/_15sdp"
+        android:fontFamily="@font/montserrat_semi_bold"
+        android:gravity="center"
+        android:src="@drawable/appicon_with_text"
+        app:layout_constraintBottom_toTopOf="@+id/signUpTV"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/signUpTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_15sdp"
+        android:backgroundTint="@color/cyan_color"
+        android:background="@drawable/rounded_button"
+        android:fontFamily="@font/montserrat_semi_bold"
+        android:gravity="center"
+        android:paddingVertical="@dimen/_12sdp"
+        android:layout_marginBottom="@dimen/_15sdp"
+        android:text="Sign Up"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_13sdp"
+        app:layout_constraintBottom_toTopOf="@+id/signInTV" />
+
+    <TextView
+        android:id="@+id/signInTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sign In"
+        android:gravity="center"
+        android:fontFamily="@font/montserrat_semi_bold"
+        android:textSize="@dimen/_13sdp"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:paddingVertical="@dimen/_12sdp"
+        android:layout_marginHorizontal="@dimen/_15sdp"
+        android:textColor="@color/blue_dark"
+        android:background="@drawable/rounded_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

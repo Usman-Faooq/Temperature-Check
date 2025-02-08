@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Non-selected part -->
+    <item android:id="@android:id/background">
+        <shape android:shape="rectangle">
+            <solid android:color="#EDF6F9" /> <!-- Default non-selected color -->
+            <corners android:radius="10dp" /> <!-- Adjust radius for rounded edges -->
+        </shape>
+    </item>
+    <!-- Selected part -->
+    <item android:id="@android:id/progress">
+        <clip>
+            <shape android:shape="rectangle">
+                <solid android:color="@color/blue_dark" /> <!-- Default selected color -->
+                <corners android:radius="10dp" /> <!-- Adjust radius for rounded edges -->
+            </shape>
+        </clip>
+    </item>
+</layer-list>
