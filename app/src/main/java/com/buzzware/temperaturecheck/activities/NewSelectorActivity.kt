@@ -58,7 +58,7 @@ class NewSelectorActivity : BaseActivity() {
                 overridePendingTransition(fadeIn, fadeOut)
 
             }else{
-                showToast("Please Select Option")
+                showAlert("Please Select Option")
             }
         }
 

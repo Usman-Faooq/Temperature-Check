@@ -64,10 +64,12 @@
                 android:text="Full Name"/>
 
             <EditText
+                android:id="@+id/fullNameET"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_42sdp"
                 android:background="@drawable/rounded_with_gray_border"
                 android:hint="Davian Wong"
+                android:inputType="text"
                 android:textSize="@dimen/_10sdp"
                 android:singleLine="true"
                 android:imeOptions="actionNext"
@@ -88,33 +90,12 @@
                 android:text="Email address"/>
 
             <EditText
+                android:id="@+id/EmailET"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_42sdp"
                 android:background="@drawable/rounded_with_gray_border"
                 android:hint="davin.wong@mail.com"
-                android:textSize="@dimen/_10sdp"
-                android:singleLine="true"
-                android:imeOptions="actionNext"
-                android:textColor="@color/black"
-                android:textColorHint="@color/border_color"
-                android:layout_marginBottom="@dimen/_10sdp"
-                android:fontFamily="@font/montserrat_medium"
-                android:paddingHorizontal="@dimen/_10sdp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat_semi_bold"
-                android:textSize="@dimen/_11sdp"
-                android:layout_marginBottom="@dimen/_5sdp"
-                android:textColor="@color/gray_100"
-                android:text="Birthday"/>
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_42sdp"
-                android:background="@drawable/rounded_with_gray_border"
-                android:hint="MM/DD/YYYY"
+                android:inputType="textEmailAddress"
                 android:textSize="@dimen/_10sdp"
                 android:singleLine="true"
                 android:imeOptions="actionNext"
@@ -134,11 +115,13 @@
                 android:text="Phone Number"/>
 
             <EditText
+                android:id="@+id/PhoneET"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_42sdp"
                 android:background="@drawable/rounded_with_gray_border"
                 android:hint="0000-0000-000000"
                 android:textSize="@dimen/_10sdp"
+                android:inputType="phone"
                 android:singleLine="true"
                 android:imeOptions="actionNext"
                 android:textColor="@color/black"
@@ -157,16 +140,43 @@
                 android:text="Password"/>
 
             <EditText
+                android:id="@+id/PasswordET"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_42sdp"
                 android:background="@drawable/rounded_with_gray_border"
                 android:hint="Password"
+                android:inputType="textPassword"
+                android:textSize="@dimen/_10sdp"
+                android:singleLine="true"
+                android:imeOptions="actionNext"
+                android:textColor="@color/black"
+                android:textColorHint="@color/border_color"
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:fontFamily="@font/montserrat_medium"
+                android:paddingHorizontal="@dimen/_10sdp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_semi_bold"
+                android:textSize="@dimen/_11sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:textColor="@color/gray_100"
+                android:text="Birthday"/>
+
+            <TextView
+                android:id="@+id/DOBET"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_42sdp"
+                android:background="@drawable/rounded_with_gray_border"
+                android:hint="MM/DD/YYYY"
+                android:gravity="center_vertical"
                 android:textSize="@dimen/_10sdp"
                 android:singleLine="true"
                 android:imeOptions="actionDone"
                 android:textColor="@color/black"
                 android:textColorHint="@color/border_color"
-                android:layout_marginBottom="@dimen/_15sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
                 android:fontFamily="@font/montserrat_medium"
                 android:paddingHorizontal="@dimen/_10sdp"/>
 
@@ -184,6 +194,7 @@
                 android:text="Get Started"/>
 
             <LinearLayout
+                android:id="@+id/aleady_account"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -195,7 +206,7 @@
                     android:fontFamily="@font/montserrat_medium"
                     android:textSize="@dimen/_10sdp"
                     android:textColor="@color/gray_100"
-                    android:text="Don't have an account?"/>
+                    android:text="Already have an account?"/>
 
                 <TextView
                     android:id="@+id/loginTV"

@@ -7,22 +7,26 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.buzzware.temperaturecheck.activities.MyTempResultActivity
-import com.buzzware.temperaturecheck.activities.TempResultActivity
 import com.buzzware.temperaturecheck.databinding.ItemDesignCheckInLayoutBinding
+import com.buzzware.temperaturecheck.model.UserQuestionModel
+import java.util.ArrayList
 
-class CheckInAdapter(val context: Context, val list: ArrayList<String>) : RecyclerView.Adapter<CheckInAdapter.ViewHolder>() {
+class CheckInAdapter(val context: Context, val questionList: ArrayList<UserQuestionModel>) : RecyclerView.Adapter<CheckInAdapter.ViewHolder>() {
 
-    inner class ViewHolder(val binding : ItemDesignCheckInLayoutBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(ItemDesignCheckInLayoutBinding.inflate(LayoutInflater.from(context), parent, false))
     }
 
     override fun getItemCount(): Int {
-        return list.size
+        return questionList.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
+        val list = questionList[position]
+
+        holder.binding.dateTV.text = list.date1
 
         holder.binding.progressSlider.setOnTouchListener { _, _ -> true }
 
@@ -32,4 +36,7 @@ class CheckInAdapter(val context: Context, val list: ArrayList<String>) : Recycl
         }
 
     }
+
+    inner class ViewHolder(val binding : ItemDesignCheckInLayoutBinding) : RecyclerView.ViewHolder(binding.root)
+
 }

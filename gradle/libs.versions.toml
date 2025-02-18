@@ -1,9 +1,9 @@
 [versions]
-agp = "8.4.1"
+agp = "8.7.2"
 duoNavigationDrawer = "3.0.0"
 glide = "4.16.0"
 imagepicker = "2.1"
-kotlin = "1.9.0"
+kotlin = "2.1.0"
 coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -15,6 +15,10 @@ constraintlayout = "2.1.4"
 powerspinner = "1.2.7"
 roundedimageview = "2.3.0"
 sdpAndroid = "1.1.1"
+googleGmsGoogleServices = "4.4.2"
+firebaseFirestore = "25.1.2"
+firebaseMessagingKtx = "24.1.0"
+firebaseAuth = "23.2.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -31,8 +35,12 @@ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "const
 roundedimageview = { module = "com.makeramen:roundedimageview", version.ref = "roundedimageview" }
 powerspinner = { module = "com.github.skydoves:powerspinner", version.ref = "powerspinner" }
 sdp-android = { module = "com.intuit.sdp:sdp-android", version.ref = "sdpAndroid" }
+firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
+firebase-messaging-ktx = { group = "com.google.firebase", name = "firebase-messaging-ktx", version.ref = "firebaseMessagingKtx" }
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
 

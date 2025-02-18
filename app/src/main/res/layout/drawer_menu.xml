@@ -22,10 +22,10 @@
             android:src="@drawable/ic_drawer"/>
 
         <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/userIV"
+            android:id="@+id/navUserIV"
             android:layout_width="@dimen/_85sdp"
             android:layout_height="@dimen/_85sdp"
-            app:riv_corner_radius="@dimen/_40sdp"
+            app:riv_corner_radius="@dimen/_100sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:src="@drawable/dummy_profile" />
 
@@ -35,31 +35,32 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:paddingVertical="@dimen/_20sdp"
         android:paddingHorizontal="@dimen/_15sdp"
+        android:paddingVertical="@dimen/_20sdp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/drawerAppBar">
 
         <LinearLayout
             android:id="@+id/homeLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:layout_marginTop="@dimen/_20sdp">
+            android:layout_marginTop="@dimen/_20sdp"
+            android:gravity="center_vertical">
 
             <com.makeramen.roundedimageview.RoundedImageView
                 android:layout_width="@dimen/_30sdp"
                 android:layout_height="@dimen/_30sdp"
-                android:src="@drawable/iv_home"/>
+                android:src="@drawable/iv_home" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_10sdp"
                 android:fontFamily="@font/montserrat_semi_bold"
                 android:gravity="start"
                 android:text="Home"
-                android:layout_marginHorizontal="@dimen/_10sdp"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_14sdp" />
 
@@ -69,21 +70,21 @@
             android:id="@+id/checkInLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:layout_marginTop="@dimen/_10sdp">
+            android:layout_marginTop="@dimen/_13sdp"
+            android:gravity="center_vertical">
 
             <com.makeramen.roundedimageview.RoundedImageView
                 android:layout_width="@dimen/_30sdp"
                 android:layout_height="@dimen/_30sdp"
-                android:src="@drawable/iv_check_in"/>
+                android:src="@drawable/iv_check_in" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_10sdp"
                 android:fontFamily="@font/montserrat_semi_bold"
                 android:gravity="start"
                 android:text="My Checkins"
-                android:layout_marginHorizontal="@dimen/_10sdp"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_14sdp" />
 
@@ -93,21 +94,45 @@
             android:id="@+id/findTherapistLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:layout_marginTop="@dimen/_10sdp">
+            android:layout_marginTop="@dimen/_13sdp"
+            android:gravity="center_vertical">
 
             <com.makeramen.roundedimageview.RoundedImageView
                 android:layout_width="@dimen/_30sdp"
                 android:layout_height="@dimen/_30sdp"
-                android:src="@drawable/iv_therapist"/>
+                android:src="@drawable/iv_therapist" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_10sdp"
                 android:fontFamily="@font/montserrat_semi_bold"
                 android:gravity="start"
                 android:text="Find a Therapist"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14sdp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/MessagesLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_13sdp"
+            android:gravity="center_vertical">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:src="@drawable/iv_profile" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_10sdp"
+                android:fontFamily="@font/montserrat_semi_bold"
+                android:gravity="start"
+                android:text="Messages"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_14sdp" />
 
@@ -117,45 +142,70 @@
             android:id="@+id/communityLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:layout_marginTop="@dimen/_10sdp">
+            android:layout_marginTop="@dimen/_13sdp"
+            android:gravity="center_vertical">
 
             <com.makeramen.roundedimageview.RoundedImageView
                 android:layout_width="@dimen/_30sdp"
                 android:layout_height="@dimen/_30sdp"
-                android:src="@drawable/iv_team"/>
+                android:src="@drawable/iv_team" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_10sdp"
                 android:fontFamily="@font/montserrat_semi_bold"
                 android:gravity="start"
                 android:text="My Community"
-                android:layout_marginHorizontal="@dimen/_10sdp"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_14sdp" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/profileLayout"
+            android:id="@+id/InvitesCommunityLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:layout_marginTop="@dimen/_10sdp">
+            android:layout_marginTop="@dimen/_13sdp"
+            android:gravity="center_vertical">
 
             <com.makeramen.roundedimageview.RoundedImageView
                 android:layout_width="@dimen/_30sdp"
                 android:layout_height="@dimen/_30sdp"
-                android:src="@drawable/iv_profile"/>
+                android:src="@drawable/iv_profile" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:fontFamily="@font/montserrat_semi_bold"
+                android:gravity="start"
+                android:text="Invites Community"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14sdp" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/profileLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_13sdp"
+            android:gravity="center_vertical">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:src="@drawable/iv_profile" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_10sdp"
                 android:fontFamily="@font/montserrat_semi_bold"
                 android:gravity="start"
                 android:text="Profile"
-                android:layout_marginHorizontal="@dimen/_10sdp"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_14sdp" />
 

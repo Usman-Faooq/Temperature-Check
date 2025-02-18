@@ -52,9 +52,9 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/tempLayoout"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_marginTop="@dimen/_15sdp"
@@ -68,24 +68,93 @@
             android:layout_height="@dimen/_140sdp"
             android:adjustViewBounds="true"
             android:src="@drawable/iv_temp"
-            android:layout_marginEnd="@dimen/_5sdp"
-            android:textSize="@dimen/_11sdp" />
+            android:textSize="@dimen/_11sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/personIV"
+            android:id="@+id/personIV1"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:adjustViewBounds="true"
+            android:visibility="invisible"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_marginLeft="@dimen/_4sdp"
+            android:src="@drawable/dummy_profile"
+            android:textSize="@dimen/_11sdp"
+            app:layout_constraintStart_toEndOf="@+id/percentTV"
+            app:layout_constraintTop_toTopOf="parent"
+            app:riv_border_color="#4CAF50"
+            app:riv_border_width="@dimen/_1sdp"
+            app:riv_corner_radius="@dimen/_50sdp" />
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/personIV2"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:adjustViewBounds="true"
+            android:visibility="invisible"
+            android:src="@drawable/dummy_profile"
+            android:textSize="@dimen/_11sdp"
+            android:layout_marginLeft="@dimen/_4sdp"
+            android:layout_marginTop="@dimen/_3sdp"
+            app:layout_constraintStart_toEndOf="@+id/percentTV"
+            app:layout_constraintTop_toBottomOf="@+id/personIV1"
+            app:riv_border_color="#4CAF50"
+            app:riv_border_width="@dimen/_1sdp"
+            app:riv_corner_radius="@dimen/_50sdp" />
+
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/personIV3"
             android:layout_width="@dimen/_20sdp"
             android:layout_height="@dimen/_20sdp"
             android:adjustViewBounds="true"
             android:src="@drawable/dummy_profile"
             android:textSize="@dimen/_11sdp"
-            app:riv_border_width="@dimen/_1sdp"
+            android:visibility="invisible"
+            android:layout_marginLeft="@dimen/_4sdp"
+            android:layout_marginTop="@dimen/_3sdp"
+            app:layout_constraintStart_toEndOf="@+id/percentTV"
+            app:layout_constraintTop_toBottomOf="@+id/personIV2"
             app:riv_border_color="#4CAF50"
-            app:riv_corner_radius="@dimen/_50sdp"
-            app:layout_constraintBottom_toBottomOf="@+id/percentTV"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/percentTV" />
+            app:riv_border_width="@dimen/_1sdp"
+            app:riv_corner_radius="@dimen/_50sdp" />
 
-    </LinearLayout>
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/personIV4"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/dummy_profile"
+            android:textSize="@dimen/_11sdp"
+            android:visibility="invisible"
+            android:layout_marginLeft="@dimen/_4sdp"
+            android:layout_marginTop="@dimen/_3sdp"
+            app:layout_constraintStart_toEndOf="@+id/percentTV"
+            app:layout_constraintTop_toBottomOf="@+id/personIV3"
+            app:riv_border_color="#4CAF50"
+            app:riv_border_width="@dimen/_1sdp"
+            app:riv_corner_radius="@dimen/_50sdp" />
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/personIV5"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/dummy_profile"
+            android:textSize="@dimen/_11sdp"
+            android:visibility="invisible"
+            android:layout_marginLeft="@dimen/_4sdp"
+            android:layout_marginTop="@dimen/_3sdp"
+            app:layout_constraintStart_toEndOf="@+id/percentTV"
+            app:layout_constraintTop_toBottomOf="@+id/personIV4"
+            app:riv_border_color="#4CAF50"
+            app:riv_border_width="@dimen/_1sdp"
+            app:riv_corner_radius="@dimen/_50sdp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/textView44"

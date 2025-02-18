@@ -1,0 +1,36 @@
+package com.buzzware.temperaturecheck.model
+
+data class UserModel(
+    var Afternoon : Long = 0,
+    var AfternoonCheckin : Boolean = false,
+    var Evening : Long = 0,
+    var EveningCheckin : Boolean = false,
+    var Morning : Long = 0,
+    var MorningCheckin : Boolean = false,
+    var authToken : String = "",
+    var deviceType : String = "",
+    var dob : Long = 0,
+    var email : String = "",
+    var firstName : String = "",
+    var groupCount : Long = 0,
+    var id : String = "",
+    var image : String = "",
+    var isApproved : Boolean = false,
+    var isOnline : Boolean = false,
+    var isSubsCribed : Boolean = false,
+    var lastName : String = "",
+    var lastcheckin : Long = 0,
+    var password : String = "",
+    var phoneNumber : String = "",
+    var pm_id : String = "",
+    var stripeCustid : String = "",
+    var stripeStatus : String = "",
+    var stripeaccount_id : String = "",
+    var token : String = "",
+    var type : String = "",
+    var userDate : Long = 0,
+    var userName : String = "",
+    var userRole : String = "",
+
+
+)

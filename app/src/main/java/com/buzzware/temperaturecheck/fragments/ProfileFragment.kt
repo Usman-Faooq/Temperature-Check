@@ -6,8 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
 import com.buzzware.temperaturecheck.R
 import com.buzzware.temperaturecheck.activities.EditProfileActivity
+import com.buzzware.temperaturecheck.classes.Constants
 import com.buzzware.temperaturecheck.databinding.FragmentProfileBinding
 
 class ProfileFragment : BaseFragment() {
@@ -26,6 +28,12 @@ class ProfileFragment : BaseFragment() {
     }
 
     private fun setView() {
+
+        binding.UserName.text = Constants.currentUser.userName
+        Glide.with(this)
+            .load(Constants.currentUser.image)
+            .placeholder(R.mipmap.ic_launcher)
+            .into(binding.profileImage)
 
     }
 

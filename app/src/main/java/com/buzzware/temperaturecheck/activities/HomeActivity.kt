@@ -11,7 +11,9 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.bumptech.glide.Glide
 import com.buzzware.temperaturecheck.R
+import com.buzzware.temperaturecheck.classes.Constants
 import com.buzzware.temperaturecheck.databinding.ActivityHomeBinding
 import com.buzzware.temperaturecheck.fragments.CheckInFragment
 import com.buzzware.temperaturecheck.fragments.CommunityFragment
@@ -57,6 +59,14 @@ class HomeActivity : BaseActivity(), HomeFragment.ItemClickListeners {
         loadFragment(HomeFragment())
 
         binding.navView.communityLayout.visibility = View.VISIBLE
+
+        Glide.with(this)
+            .load(Constants.currentUser.image)
+            .placeholder(R.mipmap.ic_launcher)
+            .error(R.mipmap.ic_launcher)
+            .into(binding.navView.navUserIV)
+
+        binding.navView.navUserIV.setOnClickListener { showToast("Toast") }
 
     }
 

@@ -15,13 +15,16 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/profile_Image"
             android:layout_width="@dimen/_80sdp"
             android:layout_height="@dimen/_80sdp"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/_8sdp"
+            app:riv_corner_radius="@dimen/_100sdp"
             android:src="@drawable/dummy_profile" />
 
         <TextView
+            android:id="@+id/User_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

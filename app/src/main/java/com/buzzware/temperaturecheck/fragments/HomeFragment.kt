@@ -3,18 +3,13 @@ package com.buzzware.temperaturecheck.fragments
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.buzzware.temperaturecheck.R
 import com.buzzware.temperaturecheck.activities.StartCheckInActivity
-import com.buzzware.temperaturecheck.activities.TeamPerformanceActivity
 import com.buzzware.temperaturecheck.adapters.AddTeamAdapter
 import com.buzzware.temperaturecheck.adapters.CheckInAdapter
-import com.buzzware.temperaturecheck.adapters.TeamAdapter
-import com.buzzware.temperaturecheck.databinding.FragmentCommunityBinding
 import com.buzzware.temperaturecheck.databinding.FragmentHomeBinding
 
 class HomeFragment : BaseFragment() {
@@ -45,8 +40,8 @@ class HomeFragment : BaseFragment() {
         binding.recyclerView2.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
         binding.recyclerView2.adapter = AddTeamAdapter(requireActivity(), arrayListOf())
 
-        binding.checkInRV.layoutManager = LinearLayoutManager(requireActivity())
-        binding.checkInRV.adapter = CheckInAdapter(requireActivity(), arrayListOf("1", "2"))
+//        binding.checkInRV.layoutManager = LinearLayoutManager(requireActivity())
+//        binding.checkInRV.adapter = CheckInAdapter(requireActivity(), arrayListOf("1", "2"))
 
     }
 
