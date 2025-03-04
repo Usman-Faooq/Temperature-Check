@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide
 import com.buzzware.temperaturecheck.R
 import com.buzzware.temperaturecheck.classes.Constants
 import com.buzzware.temperaturecheck.databinding.ActivityHomeBinding
+import com.buzzware.temperaturecheck.fragments.ChatFragment
 import com.buzzware.temperaturecheck.fragments.CheckInFragment
 import com.buzzware.temperaturecheck.fragments.CommunityFragment
 import com.buzzware.temperaturecheck.fragments.HomeFragment
@@ -92,6 +93,10 @@ class HomeActivity : BaseActivity(), HomeFragment.ItemClickListeners {
             checkOpenOrCloseDrawer()
             setProfileFragment()
         }
+        binding.navView.MessagesLayout.setOnClickListener {
+            checkOpenOrCloseDrawer()
+            setMessagesFragment()
+        }
 
         binding.profileIV.setOnClickListener {
             setProfileFragment()
@@ -102,7 +107,6 @@ class HomeActivity : BaseActivity(), HomeFragment.ItemClickListeners {
             startActivity(Intent(this, FindTherapistActivity::class.java))
             overridePendingTransition(fadeIn, fadeOut)
         }
-
     }
 
     private fun setHomeFragment() {
@@ -125,6 +129,13 @@ class HomeActivity : BaseActivity(), HomeFragment.ItemClickListeners {
         binding.profileIV.visibility = View.GONE
         binding.logoutIV.visibility = View.GONE
         loadFragmentBackStack(CommunityFragment())
+    }
+
+    private fun setMessagesFragment() {
+        binding.titleTV.text = "Messages"
+        binding.profileIV.visibility = View.GONE
+        binding.logoutIV.visibility = View.GONE
+        loadFragmentBackStack(ChatFragment())
     }
 
     private fun setProfileFragment() {

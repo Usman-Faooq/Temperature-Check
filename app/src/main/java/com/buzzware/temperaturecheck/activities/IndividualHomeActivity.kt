@@ -2,6 +2,7 @@ package com.buzzware.temperaturecheck.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.Toast
@@ -16,10 +17,12 @@ import com.bumptech.glide.Glide
 import com.buzzware.temperaturecheck.R
 import com.buzzware.temperaturecheck.classes.Constants
 import com.buzzware.temperaturecheck.databinding.ActivityHomeBinding
+import com.buzzware.temperaturecheck.fragments.ChatFragment
 import com.buzzware.temperaturecheck.fragments.CheckInFragment
 import com.buzzware.temperaturecheck.fragments.CommunityFragment
 import com.buzzware.temperaturecheck.fragments.HomeFragment
 import com.buzzware.temperaturecheck.fragments.IndividualHomeFragment
+import com.buzzware.temperaturecheck.fragments.InviteCommunityFragment
 import com.buzzware.temperaturecheck.fragments.ProfileFragment
 import com.buzzware.temperaturecheck.model.UserModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -51,6 +54,36 @@ class IndividualHomeActivity : BaseActivity(), IndividualHomeFragment.ItemClickL
         googleSignIn()
         setView()
         setListener()
+
+        getInvitationData()
+
+    }
+
+    private fun getInvitationData() {
+
+        db.collection("Groups").addSnapshotListener { snapshots, error ->
+            if (error != null) {
+                showAlert(error.message)
+                return@addSnapshotListener
+            }
+
+            if (snapshots != null) {
+                var count = 0
+
+                for (document in snapshots.documents) {
+                    val comunityMap = document.get("comunity") as? Map<String, String>
+                    if (comunityMap?.get(Constants.currentUser.id) == "requested") {
+                        count++
+                    }
+                }
+                if (count != 0)
+                {
+                    binding.navView.notification.visibility = View.VISIBLE
+                    binding.navView.notification.text = count.toString()
+                }
+
+            }
+        }
 
     }
 
@@ -117,13 +150,18 @@ class IndividualHomeActivity : BaseActivity(), IndividualHomeFragment.ItemClickL
 
         loadFragment(IndividualHomeFragment())
 
-        binding.navView.communityLayout.visibility = View.GONE
+        //binding.navView.communityLayout.visibility = View.GONE
 
         Glide.with(this)
             .load(Constants.currentUser.image)
             .placeholder(R.mipmap.ic_launcher)
             .error(R.mipmap.ic_launcher)
             .into(binding.navView.navUserIV)
+        Glide.with(this)
+            .load(Constants.currentUser.image)
+            .placeholder(R.mipmap.ic_launcher)
+            .error(R.mipmap.ic_launcher)
+            .into(binding.profileIV)
 
     }
 
@@ -141,10 +179,23 @@ class IndividualHomeActivity : BaseActivity(), IndividualHomeFragment.ItemClickL
             checkOpenOrCloseDrawer()
             setCheckInFragment()
         }
+        binding.navView.communityLayout.setOnClickListener {
+            checkOpenOrCloseDrawer()
+            setInviteCommunityFragment()
+        }
+        binding.navView.myCommunityLayout.setOnClickListener {
+            checkOpenOrCloseDrawer()
+            setCommunityFragment()
+        }
 
         binding.navView.profileLayout.setOnClickListener {
             checkOpenOrCloseDrawer()
             setProfileFragment()
+        }
+
+        binding.navView.MessagesLayout.setOnClickListener {
+            checkOpenOrCloseDrawer()
+            setMessagesFragment()
         }
 
         binding.profileIV.setOnClickListener {
@@ -191,12 +242,26 @@ class IndividualHomeActivity : BaseActivity(), IndividualHomeFragment.ItemClickL
         loadFragmentBackStack(CommunityFragment())
     }
 
+    private fun setInviteCommunityFragment() {
+        binding.titleTV.text = "Community Invitation"
+        binding.profileIV.visibility = View.GONE
+        binding.logoutIV.visibility = View.GONE
+        loadFragmentBackStack(InviteCommunityFragment())
+    }
+
     private fun setProfileFragment() {
         binding.titleTV.text = "Profile"
         binding.profileIV.visibility = View.GONE
         binding.logoutIV.visibility = View.VISIBLE
         loadFragmentBackStack(ProfileFragment())
 
+    }
+
+    private fun setMessagesFragment() {
+        binding.titleTV.text = "Messages"
+        binding.profileIV.visibility = View.GONE
+        binding.logoutIV.visibility = View.GONE
+        loadFragmentBackStack(ChatFragment())
     }
 
     private fun loadFragment(fragment: Fragment) {
@@ -208,8 +273,6 @@ class IndividualHomeActivity : BaseActivity(), IndividualHomeFragment.ItemClickL
     }
 
     private fun loadFragmentBackStack(fragment: Fragment) {
-
-        // Clear all fragments in the back stack
 
         supportFragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
 

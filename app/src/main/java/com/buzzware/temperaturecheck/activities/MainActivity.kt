@@ -7,6 +7,7 @@ import com.buzzware.temperaturecheck.R
 import com.buzzware.temperaturecheck.classes.Constants
 import com.buzzware.temperaturecheck.databinding.ActivityMainBinding
 import com.buzzware.temperaturecheck.model.UserModel
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlin.collections.ArrayList
 
 class MainActivity : BaseActivity() {
@@ -38,8 +39,13 @@ class MainActivity : BaseActivity() {
                 .addOnSuccessListener{ document ->
                     if (document.exists())
                     {
-                        mDialog.dismiss()
+                        FirebaseMessaging.getInstance().token.addOnSuccessListener { it ->
+                            db.collection("Users").document(mAuth.currentUser!!.uid).update("token", it.toString())
+                        }
                         Constants.currentUser = document.toObject(UserModel::class.java)!!
+                        startActivity(Intent(this,IndividualHomeActivity::class.java))
+                        finish()
+                        mDialog.dismiss()
                     }
                     else
                     {

@@ -52,6 +52,7 @@ dependencies {
     implementation(libs.firebase.firestore)
     implementation(libs.firebase.messaging.ktx)
     implementation(libs.firebase.auth)
+    implementation(libs.androidx.recyclerview)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -71,6 +72,10 @@ dependencies {
 
 
     implementation("com.google.android.gms:play-services-auth:20.7.0")
+
+
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
 
 
 }

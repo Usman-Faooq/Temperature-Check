@@ -38,10 +38,11 @@
             android:textSize="@dimen/_11sdp" />
 
         <TextView
+            android:id="@+id/periodOfDay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_medium"
-            android:text="4 Participants"
+            android:text="Morning"
             android:textColor="@color/gray_100"
             android:textSize="@dimen/_9sdp" />
 
@@ -53,6 +54,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat_bold"
         android:text="90%"
+        android:visibility="invisible"
         android:textColor="@color/black"
         android:textSize="@dimen/_11sdp"
         app:layout_constraintEnd_toEndOf="parent"

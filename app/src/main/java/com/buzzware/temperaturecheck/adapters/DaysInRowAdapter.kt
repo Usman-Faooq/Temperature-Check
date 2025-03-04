@@ -1,14 +1,12 @@
 package com.buzzware.temperaturecheck.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.buzzware.temperaturecheck.R
 import com.buzzware.temperaturecheck.databinding.DaysInRowItemDesignBinding
-import com.buzzware.temperaturecheck.fragments.IndividualHomeFragment
-import com.buzzware.temperaturecheck.model.DaysInRowModel
 import com.buzzware.temperaturecheck.model.UserQuestionModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -16,7 +14,7 @@ import java.util.Date
 import java.util.Locale
 
 class DaysInRowAdapter(
-    val requireActivity: FragmentActivity,
+    val requireActivity: Context,
     val arraylistDays: ArrayList<String>,
     val arraylistItems: ArrayList<UserQuestionModel>,
     val listener: ItemClicked
@@ -25,7 +23,7 @@ class DaysInRowAdapter(
 
     interface ItemClicked
     {
-        fun onItemClicked(dayIcon: ImageView)
+        fun onItemClicked(dayIcon: CharSequence)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -51,7 +49,7 @@ class DaysInRowAdapter(
                 val itemDayName = getDayName(itemTimestamp)
 
                 if (itemDayName == dayName) {
-                    holder.binding.dayIcon.setImageResource(R.drawable.tick)
+                    //holder.binding.dayIcon.setImageResource(R.drawable.tick)
                     foundMatch = true
                     check = "found"
                 }
@@ -67,13 +65,15 @@ class DaysInRowAdapter(
                 holder.binding.dayIcon.setImageResource(R.drawable.add)
             }
 
+        }else{
+            holder.binding.dayIcon.setImageResource(R.drawable.tick)
         }
 
 
         holder.binding.daysName.text = arraylistDays[position]
         holder.binding.dayIcon.setOnClickListener {
             if (check == "past"){
-                listener.onItemClicked(holder.binding.dayIcon)
+                listener.onItemClicked(getDateFromDay(getCurrentWeekRange(),holder.binding.daysName.text.toString()).toString())
             }
         }
 
@@ -103,6 +103,22 @@ class DaysInRowAdapter(
 
         return Pair(startOfWeek, endOfWeek)
     }
+    fun getDateFromDay(weekRange: Pair<Long, Long>, dayName: String): String? {
+        val sdfEEE = SimpleDateFormat("EEE", Locale.getDefault()) // Formatter for "Mon", "Tue", etc.
+        val sdfDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()) // Formatter for "yyyy-MM-dd"
+
+        val calendar = Calendar.getInstance()
+        calendar.timeInMillis = weekRange.first // Start from Monday
+
+        for (i in 0..6) { // Iterate through the 7 days of the week
+            if (sdfEEE.format(calendar.time) == dayName) {
+                return sdfDate.format(calendar.time) // Return date in "yyyy-MM-dd" format
+            }
+            calendar.add(Calendar.DAY_OF_MONTH, 1) // Move to next day
+        }
+        return null // If the day name is invalid
+    }
+
 
     fun isFutureDay(dayName: String): Boolean {
         val calendar = Calendar.getInstance()

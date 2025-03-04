@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.TodaysGraphFragment">
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_15sdp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/rootIV"
+            android:layout_width="@dimen/_45sdp"
+            android:layout_height="@dimen/_45sdp"
+            android:layout_gravity="left"
+            android:src="@drawable/dummy_team" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:fontFamily="@font/montserrat_bold"
+            android:gravity="center"
+            android:text="Jason Gillespie"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_15sdp" />
+    </LinearLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/tempLayoout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/_15sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+
+        <ImageView
+            android:id="@+id/percentTV"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_140sdp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/iv_temp"
+            android:textSize="@dimen/_11sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/personIV1"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:adjustViewBounds="true"
+            android:visibility="invisible"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_marginLeft="@dimen/_4sdp"
+            android:src="@drawable/dummy_profile"
+            android:textSize="@dimen/_11sdp"
+            app:layout_constraintStart_toEndOf="@+id/percentTV"
+            app:layout_constraintTop_toTopOf="parent"
+            app:riv_border_color="#4CAF50"
+            app:riv_border_width="@dimen/_1sdp"
+            app:riv_corner_radius="@dimen/_50sdp" />
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/personIV2"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:adjustViewBounds="true"
+            android:visibility="invisible"
+            android:src="@drawable/dummy_profile"
+            android:textSize="@dimen/_11sdp"
+            android:layout_marginLeft="@dimen/_4sdp"
+            android:layout_marginTop="@dimen/_3sdp"
+            app:layout_constraintStart_toEndOf="@+id/percentTV"
+            app:layout_constraintTop_toBottomOf="@+id/personIV1"
+            app:riv_border_color="#4CAF50"
+            app:riv_border_width="@dimen/_1sdp"
+            app:riv_corner_radius="@dimen/_50sdp" />
+
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/personIV3"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/dummy_profile"
+            android:textSize="@dimen/_11sdp"
+            android:visibility="invisible"
+            android:layout_marginLeft="@dimen/_4sdp"
+            android:layout_marginTop="@dimen/_3sdp"
+            app:layout_constraintStart_toEndOf="@+id/percentTV"
+            app:layout_constraintTop_toBottomOf="@+id/personIV2"
+            app:riv_border_color="#4CAF50"
+            app:riv_border_width="@dimen/_1sdp"
+            app:riv_corner_radius="@dimen/_50sdp" />
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/personIV4"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/dummy_profile"
+            android:textSize="@dimen/_11sdp"
+            android:visibility="invisible"
+            android:layout_marginLeft="@dimen/_4sdp"
+            android:layout_marginTop="@dimen/_3sdp"
+            app:layout_constraintStart_toEndOf="@+id/percentTV"
+            app:layout_constraintTop_toBottomOf="@+id/personIV3"
+            app:riv_border_color="#4CAF50"
+            app:riv_border_width="@dimen/_1sdp"
+            app:riv_corner_radius="@dimen/_50sdp" />
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/personIV5"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/dummy_profile"
+            android:textSize="@dimen/_11sdp"
+            android:visibility="invisible"
+            android:layout_marginLeft="@dimen/_4sdp"
+            android:layout_marginTop="@dimen/_3sdp"
+            app:layout_constraintStart_toEndOf="@+id/percentTV"
+            app:layout_constraintTop_toBottomOf="@+id/personIV4"
+            app:riv_border_color="#4CAF50"
+            app:riv_border_width="@dimen/_1sdp"
+            app:riv_corner_radius="@dimen/_50sdp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat_bold"
+        android:gravity="center"
+        android:text="AI Suggestions"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_15sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tempLayoout" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:layout_marginVertical="@dimen/_10sdp"
+        android:fontFamily="@font/montserrat_medium"
+        android:lineSpacingExtra="@dimen/_3sdp"
+        android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+        android:textColor="@color/gray_100"
+        android:textSize="@dimen/_10sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

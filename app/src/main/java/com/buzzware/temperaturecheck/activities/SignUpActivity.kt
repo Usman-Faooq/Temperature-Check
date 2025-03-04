@@ -62,15 +62,11 @@ class SignUpActivity : BaseActivity() {
         binding.backIV.setOnClickListener { onBackPressed() }
 
         binding.signUpTV.setOnClickListener {
-            if (Constants.selectedType != "individual" && checkFields())
-            {
-                startActivity(Intent(this, PaymentPlanActivity::class.java))
-                overridePendingTransition(fadeIn, fadeOut)
-
-            }else if(checkFields())
+            if (checkFields())
             {
                 uploadUserDataInFirebaseAuthentication()
             }
+
         }
 
         binding.PasswordET.setOnEditorActionListener { textView, i, keyEvent ->
@@ -210,9 +206,10 @@ class SignUpActivity : BaseActivity() {
         db.collection("Users").document(userID)
             .set(userData)
             .addOnSuccessListener {
-
-                showAlert("Your Account is Created Successfully! \n" +
-                        "You can now login")
+                val intent = Intent(this,IndividualHomeActivity::class.java)
+                intent.putExtra("User_ID",userID)
+                startActivity(intent)
+                finish()
                 mDialog.dismiss()
 
             }

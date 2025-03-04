@@ -19,6 +19,7 @@ class MyTempResultActivity : BaseActivity() {
     }
     private var user_mode : Int? = 0
     private var total : Int = 0
+    private var res : Int? = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +34,7 @@ class MyTempResultActivity : BaseActivity() {
     }
 
     private fun setView() {
-        val res = user_mode?.div(total)
+        res = user_mode?.div(total)
 
         if(res == 1) {
             binding.personIV5.visibility = View.VISIBLE
@@ -79,6 +80,13 @@ class MyTempResultActivity : BaseActivity() {
 
         binding.findTV.setOnClickListener {
             startActivity(Intent(this, FindTherapistActivity::class.java))
+            overridePendingTransition(fadeIn, fadeOut)
+        }
+
+        binding.DetailedAnalytics.setOnClickListener {
+            val intent = Intent(this,TempResultActivity::class.java)
+            intent.putExtra("ResultOfMode",res)
+            startActivity(intent)
             overridePendingTransition(fadeIn, fadeOut)
         }
     }

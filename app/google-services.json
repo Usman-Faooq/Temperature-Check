@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1013031615039",
+    "project_id": "temperaturecheck-9839c",
+    "storage_bucket": "temperaturecheck-9839c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1013031615039:android:af23c21f824884864b168a",
+        "android_client_info": {
+          "package_name": "com.buzzware.temperaturecheck"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1013031615039-ol3h0coh4nj9npan3jpspcobrvjjq2ct.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAq8k2ls3qfCXP1OzsQ2T5HbYvWo3HaPDk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1013031615039-ol3h0coh4nj9npan3jpspcobrvjjq2ct.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1013031615039-caf53hmoq6rbvhnaochia6jkaps845pg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.buzzware.temperatureCheck"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

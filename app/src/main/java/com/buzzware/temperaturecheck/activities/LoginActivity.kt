@@ -137,7 +137,7 @@ class LoginActivity : BaseActivity() {
                     }
 
             }catch(e: ApiException){
-                showToast(e.toString())
+                showAlert(e.toString())
                 mDialog.dismiss()
 
             }

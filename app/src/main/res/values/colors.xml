@@ -2,6 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="whitish_gray">#8A8989</color>
 
     <color name="blue_dark">#094E8A</color>
     <color name="blue_light">#0367A6</color>
@@ -9,7 +10,14 @@
     <color name="cyan_color_20">#334AB0D9</color>
 
     <color name="gray_100">#575757</color>
+    <color name="gray">#7E7B7B</color>
     <color name="border_color">#A2A2A2</color>
+
+    <color name="very_happy">#4CAF50</color>
+    <color name="happy">#8BC34A</color>
+    <color name="uneasy">#CDDC39</color>
+    <color name="sad">#F85F32</color>
+    <color name="angry">#F83232</color>
 
 
 </resources>

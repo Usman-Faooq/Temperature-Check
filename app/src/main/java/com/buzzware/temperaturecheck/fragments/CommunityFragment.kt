@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.buzzware.temperaturecheck.R
 import com.buzzware.temperaturecheck.activities.TeamPerformanceActivity
+import com.buzzware.temperaturecheck.adapters.ChatingViewPagerAdapter
 import com.buzzware.temperaturecheck.adapters.CommunityAdapter
 import com.buzzware.temperaturecheck.databinding.FragmentCommunityBinding
 import com.buzzware.temperaturecheck.databinding.FragmentProfileBinding
@@ -18,6 +19,7 @@ class CommunityFragment : BaseFragment() {
     private val binding : FragmentCommunityBinding by lazy {
         FragmentCommunityBinding.inflate(layoutInflater)
     }
+    private lateinit var communityAdapter : CommunityAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -29,17 +31,24 @@ class CommunityFragment : BaseFragment() {
     }
 
     private fun setView() {
-
-        binding.recyclerView.layoutManager = LinearLayoutManager(requireActivity())
-        binding.recyclerView.adapter = CommunityAdapter(requireActivity(), arrayListOf())
-
+        binding.myGroupTV.setBackgroundResource(R.drawable.check_in_bg_today)
+        val fragment = listOf(MyGroupCommunity())
+        communityAdapter = CommunityAdapter(requireActivity(),fragment)
+        binding.viewPagerCommunity.adapter = communityAdapter
     }
 
     private fun setListener() {
+        binding.myGroupTV.setOnClickListener {
+            binding.myGroupTV.setBackgroundResource(R.drawable.check_in_bg_today)
+            binding.CommunityGroupTV.setBackgroundResource(0)
+            communityAdapter.updateFragments(listOf(MyGroupCommunity()))
+        }
 
-        binding.teamPreformanceTV.setOnClickListener {
-            startActivity(Intent(requireActivity(), TeamPerformanceActivity::class.java))
-            requireActivity().overridePendingTransition(fadeIn, fadeOut)
+        binding.CommunityGroupTV.setOnClickListener {
+            binding.CommunityGroupTV.setBackgroundResource(R.drawable.check_in_bg_month)
+            binding.myGroupTV.setBackgroundResource(0)
+            communityAdapter.updateFragments(listOf(CommunityGroup()))
+
         }
 
     }

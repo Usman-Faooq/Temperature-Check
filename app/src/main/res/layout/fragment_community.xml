@@ -50,45 +50,53 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_marginHorizontal="@dimen/_25sdp"
+        android:layout_marginVertical="@dimen/_8sdp"
+        android:background="@drawable/check_in_bg"
+        android:weightSum="2"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+
+
+        <TextView
+            android:id="@+id/myGroupTV"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="My Group"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/CommunityGroupTV"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Community Group"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPagerCommunity"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/teamPreformanceTV"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
-
-    <TextView
-        android:id="@+id/teamPreformanceTV"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_15sdp"
-        android:backgroundTint="@color/cyan_color"
-        android:background="@drawable/rounded_button"
-        android:fontFamily="@font/montserrat_semi_bold"
-        android:gravity="center"
-        android:paddingVertical="@dimen/_12sdp"
-        android:layout_marginBottom="@dimen/_11sdp"
-        android:text="Team Preformance"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_13sdp"
-        app:layout_constraintBottom_toTopOf="@+id/signInTV" />
-
-    <TextView
-        android:id="@+id/signInTV"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Invite Team Members to Join"
-        android:gravity="center"
-        android:fontFamily="@font/montserrat_semi_bold"
-        android:textSize="@dimen/_13sdp"
-        android:layout_marginBottom="@dimen/_15sdp"
-        android:paddingVertical="@dimen/_12sdp"
-        android:layout_marginHorizontal="@dimen/_15sdp"
-        android:textColor="@color/white"
-        android:background="@drawable/rounded_button"
-        android:backgroundTint="@color/blue_dark"
+        android:layout_margin="@dimen/_10sdp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linear" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
