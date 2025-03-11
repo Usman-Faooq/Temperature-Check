@@ -30,6 +30,7 @@ class IndividualHomeFragment : BaseFragment(),DaysInRowAdapter.ItemClicked {
     }
 
     var checkInsList : ArrayList<UserQuestionModel> = ArrayList()
+    var updateCheckInList : ArrayList<UserQuestionModel> = ArrayList()
 
     interface ItemClickListeners {
         fun onCheckInClick()
@@ -45,12 +46,17 @@ class IndividualHomeFragment : BaseFragment(),DaysInRowAdapter.ItemClicked {
         getQuestionsData()
 
 
+        updateCheckInList.clear()
+
+
+
 
         return binding.root
     }
 
     private fun getQuestionsData() {
 
+        mDialog.show()
         db.collection("UserQuestions")
             .whereEqualTo("userId",Constants.currentUser.id)
             .get()
@@ -60,6 +66,7 @@ class IndividualHomeFragment : BaseFragment(),DaysInRowAdapter.ItemClicked {
             }
             .addOnFailureListener { exception ->
                 showAlert(exception.message.toString())
+                mDialog.dismiss()
             }
     }
 
@@ -74,17 +81,113 @@ class IndividualHomeFragment : BaseFragment(),DaysInRowAdapter.ItemClicked {
 
 
 
-        checkInsList.clear()
-        Constants.currentUserQuestion.forEach { it ->
-            if(isSameDay(System.currentTimeMillis().toLong(),it.date.toLong()))
-            { checkInsList.add(it) }
-        }
-        binding.checkInRV.layoutManager = LinearLayoutManager(fragmentContext)
-        binding.checkInRV.adapter = CheckInAdapter(fragmentContext, checkInsList)
 
+        val morningScores = mutableListOf<Int>()
+        val afternoonScores = mutableListOf<Int>()
+        val eveningScores = mutableListOf<Int>()
+
+        Constants.currentUserQuestion.forEach { it ->
+            if(isSameDay(System.currentTimeMillis(),it.date.toLong()))
+            {
+                checkInsList.add(it)
+
+                // Categorize based on time of the day
+                when (it.today) {
+                    "Morning" -> morningScores.add(getMoodScore(it.answer))
+                    "Afternoon" -> afternoonScores.add(getMoodScore(it.answer))
+                    "Evening" -> eveningScores.add(getMoodScore(it.answer))
+                }
+            }
+        }
+
+
+        Log.d("LOGGER","${checkInsList}")
+
+        // Calculate averages
+        val morningAvg = if (morningScores.isNotEmpty()) morningScores.sum() / morningScores.size else 0
+        val afternoonAvg = if (afternoonScores.isNotEmpty()) afternoonScores.sum() / afternoonScores.size else 0
+        val eveningAvg = if (eveningScores.isNotEmpty()) eveningScores.sum() / eveningScores.size else 0
+
+        if (morningAvg > 0){
+            val model = checkInsList.firstOrNull { it.today == "Morning" }
+            model!!.avg = morningAvg.toDouble()
+            updateCheckInList.add(model)
+        }
+
+        if (afternoonAvg > 0){
+            val model = checkInsList.firstOrNull { it.today == "Afternoon" }
+            model!!.avg = afternoonAvg.toDouble()
+            updateCheckInList.add(model!!)
+        }
+
+        if (eveningAvg > 0){
+            val model = checkInsList.firstOrNull { it.today == "Evening" }
+            model!!.avg = eveningAvg.toDouble()
+            updateCheckInList.add(model!!)
+        }
+
+        // Log the averages
+        Log.d("AVG_MOOD", "Morning Avg: $morningAvg")
+        Log.d("AVG_MOOD", "Afternoon Avg: $afternoonAvg")
+        Log.d("AVG_MOOD", "Evening Avg: $eveningAvg")
+
+        setTodaysAvgmode(morningAvg,eveningAvg,afternoonAvg)
+        binding.checkInRV.layoutManager = LinearLayoutManager(fragmentContext)
+        binding.checkInRV.adapter = CheckInAdapter(fragmentContext, updateCheckInList)
+        mDialog.dismiss()
 
     }
 
+    private fun setTodaysAvgmode(morningAvg: Int, eveningAvg: Int, afternoonAvg: Int) {
+
+        val nonZeroCount = listOf(morningAvg, eveningAvg, afternoonAvg).count { it != 0 }
+        val divisor = if (nonZeroCount == 0) 1 else nonZeroCount
+
+        val total_Avg = (morningAvg + eveningAvg + afternoonAvg)/divisor
+
+        when (total_Avg) {
+            5 -> {
+                binding.personIV5.visibility = View.VISIBLE
+                Glide.with(this)
+                    .load(Constants.currentUser.image)
+                    .placeholder(R.mipmap.ic_launcher)
+                    .into(binding.personIV5)
+            }
+            4 -> {
+                //color = "happy"
+                binding.personIV4.visibility = View.VISIBLE
+                Glide.with(this)
+                    .load(Constants.currentUser.image)
+                    .placeholder(R.mipmap.ic_launcher)
+                    .into(binding.personIV4)
+
+            }
+            3 -> {
+                binding.personIV3.visibility = View.VISIBLE
+                Glide.with(this)
+                    .load(Constants.currentUser.image)
+                    .placeholder(R.mipmap.ic_launcher)
+                    .into(binding.personIV3)
+
+            }
+            2 -> {
+                binding.personIV2.visibility = View.VISIBLE
+                Glide.with(this)
+                    .load(Constants.currentUser.image)
+                    .placeholder(R.mipmap.ic_launcher)
+                    .into(binding.personIV2)
+
+            }
+            1 -> {
+                binding.personIV1.visibility = View.VISIBLE
+                Glide.with(this)
+                    .load(Constants.currentUser.image)
+                    .placeholder(R.mipmap.ic_launcher)
+                    .into(binding.personIV1)
+            }
+        }
+
+    }
 
 
     fun isSameDay(timestamp1: Long, timestamp2: Long): Boolean {
@@ -97,11 +200,6 @@ class IndividualHomeFragment : BaseFragment(),DaysInRowAdapter.ItemClicked {
 
 
     private fun setView() {
-
-        Glide.with(this)
-            .load(Constants.currentUser.image)
-            .placeholder(R.mipmap.ic_launcher)
-            .into(binding.personIV)
 
         Glide.with(this)
             .load(Constants.currentUser.image)
@@ -150,6 +248,17 @@ class IndividualHomeFragment : BaseFragment(),DaysInRowAdapter.ItemClicked {
     fun getCurrentDate(): String {
         val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         return sdf.format(Date())
+    }
+
+    private fun getMoodScore(answer: String?): Int {
+        return when (answer) {
+            "Very Happy" -> 5
+            "Happy" -> 4
+            "Uneasy" -> 3
+            "Sad" -> 2
+            "Angry" -> 1
+            else -> 0
+        }
     }
 
 

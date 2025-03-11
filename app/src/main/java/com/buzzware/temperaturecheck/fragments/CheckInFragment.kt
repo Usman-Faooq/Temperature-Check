@@ -1,6 +1,7 @@
 package com.buzzware.temperaturecheck.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +23,7 @@ class CheckInFragment : Fragment() {
     val todaysArraylist : ArrayList<UserQuestionModel> = ArrayList()
     val weeksArraylist : ArrayList<UserQuestionModel> = ArrayList()
     val monthsArraylist : ArrayList<UserQuestionModel> = ArrayList()
+    val updateArraylist : ArrayList<UserQuestionModel> = ArrayList()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -70,41 +72,199 @@ class CheckInFragment : Fragment() {
     }
 
     private fun monthsCheckins() {
+
+        updateArraylist.clear()
+
+        val morningScores = mutableListOf<Int>()
+        val afternoonScores = mutableListOf<Int>()
+        val eveningScores = mutableListOf<Int>()
+
+
         Constants.currentUserQuestion.forEach { it ->
             if (isSameMonth(System.currentTimeMillis(),it.date.toLong()))
             {
                 monthsArraylist.add(it)
-                binding.recyclerView.layoutManager = LinearLayoutManager(requireActivity())
-                binding.recyclerView.adapter = CheckInAdapter(requireActivity(), monthsArraylist)
 
+
+                when (it.today) {
+                    "Morning" -> morningScores.add(getMoodScore(it.answer))
+                    "Afternoon" -> afternoonScores.add(getMoodScore(it.answer))
+                    "Evening" -> eveningScores.add(getMoodScore(it.answer))
+                }
+
+            }
+        }
+
+        val morningAvg = if (morningScores.isNotEmpty()) morningScores.sum() / morningScores.size else 0
+        val afternoonAvg = if (afternoonScores.isNotEmpty()) afternoonScores.sum() / afternoonScores.size else 0
+        val eveningAvg = if (eveningScores.isNotEmpty()) eveningScores.sum() / eveningScores.size else 0
+
+
+        if (morningAvg > 0){
+            val models = monthsArraylist.filter { it.today == "Morning" }
+
+            models.forEach { model ->
+                model.avg = morningAvg.toDouble()
+                updateArraylist.add(model)
             }
 
         }
+
+        if (afternoonAvg > 0){
+
+            val models = monthsArraylist.filter { it.today == "Afternoon" }
+
+            models.forEach { model ->
+                model.avg = morningAvg.toDouble()
+                updateArraylist.add(model)
+            }
+        }
+
+        if (eveningAvg > 0){
+            val models = monthsArraylist.filter { it.today == "Evening" }
+
+            models.forEach { model ->
+                model.avg = morningAvg.toDouble()
+                updateArraylist.add(model)
+            }
+        }
+        updateArraylist.sortedByDescending {
+            it.date1
+        }
+
+
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireActivity())
+        binding.recyclerView.adapter = CheckInAdapter(requireActivity(), updateArraylist)
+
+
     }
 
     private fun weeksCehckins()
     {
+        updateArraylist.clear()
+
+        val morningScores = mutableListOf<Int>()
+        val afternoonScores = mutableListOf<Int>()
+        val eveningScores = mutableListOf<Int>()
+
+
+
         Constants.currentUserQuestion.forEach { it ->
             if (isSameWeek(System.currentTimeMillis(),it.date.toLong()))
             {
                 weeksArraylist.add(it)
-                binding.recyclerView.layoutManager = LinearLayoutManager(requireActivity())
-                binding.recyclerView.adapter = CheckInAdapter(requireActivity(), weeksArraylist)
+
+
+                when (it.today) {
+                    "Morning" -> morningScores.add(getMoodScore(it.answer))
+                    "Afternoon" -> afternoonScores.add(getMoodScore(it.answer))
+                    "Evening" -> eveningScores.add(getMoodScore(it.answer))
+                }
+
             }
         }
+
+        Log.d("LOGGER","Size of weekList ${weeksArraylist.size}")
+
+
+
+        val morningAvg = if (morningScores.isNotEmpty()) morningScores.sum() / morningScores.size else 0
+        val afternoonAvg = if (afternoonScores.isNotEmpty()) afternoonScores.sum() / afternoonScores.size else 0
+        val eveningAvg = if (eveningScores.isNotEmpty()) eveningScores.sum() / eveningScores.size else 0
+
+
+        if (morningAvg > 0){
+            val models = weeksArraylist.filter { it.today == "Morning" }
+
+            models.forEach { model ->
+                model.avg = morningAvg.toDouble()
+                updateArraylist.add(model)
+            }
+
+        }
+
+        if (afternoonAvg > 0){
+            val models = weeksArraylist.filter { it.today == "Afternoon" }
+
+            models.forEach { model ->
+                model.avg = morningAvg.toDouble()
+                updateArraylist.add(model)
+            }
+        }
+
+        if (eveningAvg > 0){
+
+            val models = weeksArraylist.filter { it.today == "Evening" }
+
+            models.forEach { model ->
+                model.avg = morningAvg.toDouble()
+                updateArraylist.add(model)
+            }
+        }
+
+        Log.d("LOGGER","updateArraylist size${updateArraylist.size}")
+
+        updateArraylist.sortedByDescending {
+            it.date1
+        }
+
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireActivity())
+        binding.recyclerView.adapter = CheckInAdapter(requireActivity(), updateArraylist)
+
 
     }
 
     private fun todaysCheckins(){
 
+        updateArraylist.clear()
+
+        val morningScores = mutableListOf<Int>()
+        val afternoonScores = mutableListOf<Int>()
+        val eveningScores = mutableListOf<Int>()
+
         Constants.currentUserQuestion.forEach { it ->
             if (isSameDay(System.currentTimeMillis(),it.date.toLong()))
             {
                 todaysArraylist.add(it)
-                binding.recyclerView.layoutManager = LinearLayoutManager(requireActivity())
-                binding.recyclerView.adapter = CheckInAdapter(requireActivity(), todaysArraylist)
+
+
+                when (it.today) {
+                    "Morning" -> morningScores.add(getMoodScore(it.answer))
+                    "Afternoon" -> afternoonScores.add(getMoodScore(it.answer))
+                    "Evening" -> eveningScores.add(getMoodScore(it.answer))
+                }
+
+
             }
         }
+
+        // Calculate averages
+        val morningAvg = if (morningScores.isNotEmpty()) morningScores.sum() / morningScores.size else 0
+        val afternoonAvg = if (afternoonScores.isNotEmpty()) afternoonScores.sum() / afternoonScores.size else 0
+        val eveningAvg = if (eveningScores.isNotEmpty()) eveningScores.sum() / eveningScores.size else 0
+
+
+        if (morningAvg > 0){
+            val model = todaysArraylist.firstOrNull { it.today == "Morning" }
+            model!!.avg = morningAvg.toDouble()
+            updateArraylist.add(model)
+        }
+
+        if (afternoonAvg > 0){
+            val model = todaysArraylist.firstOrNull { it.today == "Afternoon" }
+            model!!.avg = afternoonAvg.toDouble()
+            updateArraylist.add(model)
+        }
+
+        if (eveningAvg > 0){
+            val model = todaysArraylist.firstOrNull { it.today == "Evening" }
+            model!!.avg = eveningAvg.toDouble()
+            updateArraylist.add(model)
+        }
+
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireActivity())
+        binding.recyclerView.adapter = CheckInAdapter(requireActivity(), updateArraylist)
+
 
     }
 
@@ -131,5 +291,17 @@ class CheckInFragment : Fragment() {
 
         return calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR) &&
                 calendar1.get(Calendar.MONTH) == calendar2.get(Calendar.MONTH)
+    }
+
+
+    private fun getMoodScore(answer: String?): Int {
+        return when (answer) {
+            "Very Happy" -> 5
+            "Happy" -> 4
+            "Uneasy" -> 3
+            "Sad" -> 2
+            "Angry" -> 1
+            else -> 0
+        }
     }
 }

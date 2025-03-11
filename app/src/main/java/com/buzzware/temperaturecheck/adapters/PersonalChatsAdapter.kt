@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.buzzware.temperaturecheck.classes.Constants
 import com.buzzware.temperaturecheck.databinding.PersonalChatItemDesignBinding
 import com.buzzware.temperaturecheck.model.ChatModel
 import com.google.firebase.firestore.FieldValue
@@ -34,7 +35,7 @@ class PersonalChatsAdapter(
         holder.binding.messageTitle.text = list1.lastMessage?.content.toString()
 
         list1.participants?.keys?.forEach {
-            if ("cJsN8ylqXTRl1TeV4dRTS2M3Y7E3" != it)
+            if (Constants.currentUser.id != it)
             {
                 list1.senderID = it
                 getPersonalSenderData(it){userName ->

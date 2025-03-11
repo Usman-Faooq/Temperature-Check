@@ -89,12 +89,12 @@
         android:text="Community perrformance"
         android:textColor="@color/white"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/addTeam"
+        app:layout_constraintBottom_toTopOf="@+id/addMembers"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/addTeam"
+        android:id="@+id/addMembers"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_13sdp"

@@ -12,6 +12,9 @@ class MyGroupCommunityAdapter(val context : Context, val arrayList : ArrayList<G
 
     interface OnClicked{
         fun OnItemClicked(name: String, id: HashMap<String, String>, id1: String)
+        fun OnDeleteClicked(id: String)
+        fun OnMessageClicked(id: String, name: String)
+        fun onEditClicked(id: String, name: String)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -26,9 +29,20 @@ class MyGroupCommunityAdapter(val context : Context, val arrayList : ArrayList<G
         val list = arrayList[position]
         holder.binding.groupName.text = list.name
 
-
         holder.binding.root.setOnClickListener {
             listener.OnItemClicked(list.name,list.comunity,list.id)
+        }
+
+        holder.binding.deleteIV.setOnClickListener {
+            listener.OnDeleteClicked(list.id)
+        }
+
+        holder.binding.chatIV.setOnClickListener {
+            listener.OnMessageClicked(list.id,list.name)
+        }
+
+        holder.binding.editIV.setOnClickListener {
+            listener.onEditClicked(list.id,list.name)
         }
     }
 

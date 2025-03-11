@@ -36,7 +36,7 @@ class PersonalChatFragment() : BaseFragment(),PersonalChatsAdapter.OnClicked {
     private fun getChatingData() {
 
         db.collection("Chat")
-            .whereEqualTo("participants.cJsN8ylqXTRl1TeV4dRTS2M3Y7E3", true)
+            .whereEqualTo("participants.${Constants.currentUser.id}", true)
             .addSnapshotListener { document, error ->
 
                 if (error != null){
@@ -46,17 +46,18 @@ class PersonalChatFragment() : BaseFragment(),PersonalChatsAdapter.OnClicked {
 
                 Constants.userPersonalChats.clear()
                 Constants.userGroupChats.clear()
-                document?.forEach {
-                    val model = it.toObject(ChatModel::class.java)
-                    model.chatId = it.id
-                    if (model.chatType == "one") {
-                        Constants.userPersonalChats.add(model)
 
-                    } else {
-                        Constants.userGroupChats.add(model)
+
+                    document?.forEach {
+                        val model = it.toObject(ChatModel::class.java)
+                        model.chatId = it.id
+                        if (model.chatType == "one") {
+                            Constants.userPersonalChats.add(model)
+                        } else {
+                            Constants.userGroupChats.add(model)
+                        }
                     }
-                }
-                setViews()
+                    setViews()
 
             }
 
@@ -91,7 +92,7 @@ class PersonalChatFragment() : BaseFragment(),PersonalChatsAdapter.OnClicked {
     private fun leaveGroup(chatId: String?) {
 
         val updates = hashMapOf<String, Any>(
-            "participants.cJsN8ylqXTRl1TeV4dRTS2M3Y7E3" to FieldValue.delete()
+            "participants.${Constants.currentUser.id}" to FieldValue.delete()
         )
         FirebaseFirestore.getInstance().collection("Chat")
             .document(chatId!!)

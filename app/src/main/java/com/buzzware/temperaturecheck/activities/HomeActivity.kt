@@ -38,6 +38,17 @@ class HomeActivity : BaseActivity(), HomeFragment.ItemClickListeners {
 
     }
 
+
+    override fun onResume() {
+        super.onResume()
+        binding.titleTV.text = "Temperature-Check"
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        binding.titleTV.text = "Temperature-Check"
+    }
+
     private fun setDrawer() {
 
         val drawerToggle = DuoDrawerToggle(this, binding.drawer,

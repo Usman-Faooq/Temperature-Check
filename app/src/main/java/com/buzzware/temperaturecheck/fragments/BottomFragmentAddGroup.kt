@@ -10,9 +10,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import com.buzzware.temperaturecheck.classes.Constants
 import com.buzzware.temperaturecheck.databinding.FragmentBottomAddGroupBinding
 import com.buzzware.temperaturecheck.databinding.ShowCustomeAlertBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.UUID
 
@@ -59,13 +61,14 @@ class BottomFragmentAddGroup : BottomSheetDialogFragment() {
             "id" to UID,
             "lastcheckin" to 0,
             "name" to teamName,
-            "userId" to "cJsN8ylqXTRl1TeV4dRTS2M3Y7E3")
+            "userId" to "${Constants.currentUser.id}")
 
         FirebaseFirestore.getInstance().collection("Groups")
             .document(UID)
             .set(data)
             .addOnSuccessListener {
                 showAlert("You Have successfully created ${teamName} group!")
+                updateUserGroupCount()
                 dismiss()
             }
             .addOnFailureListener { exception ->
@@ -74,6 +77,18 @@ class BottomFragmentAddGroup : BottomSheetDialogFragment() {
 
 
 
+    }
+
+    private fun updateUserGroupCount() {
+        FirebaseFirestore.getInstance().collection("Users")
+            .document(Constants.currentUser.id)
+            .update("groupCount",FieldValue.increment(1))
+            .addOnSuccessListener {
+                Constants.currentUser.groupCount++
+            }
+            .addOnFailureListener { exception->
+                showAlert(exception.message)
+            }
     }
 
 

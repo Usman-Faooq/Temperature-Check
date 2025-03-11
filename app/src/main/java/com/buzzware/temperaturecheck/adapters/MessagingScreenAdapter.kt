@@ -4,7 +4,12 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.buzzware.temperaturecheck.R
+import com.buzzware.temperaturecheck.classes.Constants
 import com.buzzware.temperaturecheck.databinding.ChatingItemDesignBinding
 import com.buzzware.temperaturecheck.model.MessagesModel
 import java.text.SimpleDateFormat
@@ -25,18 +30,63 @@ class MessagingScreenAdapter(val context : Context,val arraylist : ArrayList<Mes
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val list = arraylist[position]
 
-        if (list.fromID.equals("cJsN8ylqXTRl1TeV4dRTS2M3Y7E3"))
-        {
-            holder.binding.recieverItem.visibility = View.INVISIBLE
-            holder.binding.recieverItemTime.visibility = View.INVISIBLE
+        if (list.fromID == Constants.currentUser.id) {
+
+            holder.binding.myLayout.visibility = View.VISIBLE
+            holder.binding.reciveLayout.visibility = View.GONE
+
             holder.binding.senderItem.text = list.content
             holder.binding.senderItemTime.text = formatTimestamp(list.timestamp)
-        } else
-        {
-            holder.binding.senderItem.visibility = View.INVISIBLE
-            holder.binding.senderItemTime.visibility = View.INVISIBLE
+
+            when(list.type) {
+                "image"->{
+                    holder.binding.senderItem.visibility = View.GONE
+                    holder.binding.senderImage.visibility = View.VISIBLE
+                    Glide.with(context)
+                        .load(list.content)
+                        .into(holder.binding.senderImage)
+                }
+                "gif"->{
+                    holder.binding.senderItem.visibility = View.GONE
+                    holder.binding.senderImage.visibility = View.VISIBLE
+                    Glide.with(context)
+                        .asGif()
+                        .load(list.content)
+                        .into(holder.binding.senderImage)}
+                else ->{
+                    holder.binding.senderItem.visibility = View.VISIBLE
+                    holder.binding.senderImage.visibility = View.GONE
+                }
+            }
+        } else {
+
+            holder.binding.myLayout.visibility = View.GONE
+            holder.binding.reciveLayout.visibility = View.VISIBLE
+
             holder.binding.recieverItem.text = list.content
             holder.binding.recieverItemTime.text = formatTimestamp(list.timestamp)
+
+            when(list.type) {
+                "image" -> {
+                    holder.binding.recieverItem.visibility = View.GONE
+                    holder.binding.recieverImage.visibility = View.VISIBLE
+                    Glide.with(context)
+                        .load(list.content)
+                        .into(holder.binding.recieverImage)
+                }
+                "gif" -> {
+                    holder.binding.recieverItem.visibility = View.GONE
+                    holder.binding.recieverImage.visibility = View.VISIBLE
+                    Glide.with(context)
+                        .asGif()
+                        .load(list.content)
+                        .into(holder.binding.recieverImage)
+                }
+                else -> {
+                    holder.binding.recieverItem.visibility = View.VISIBLE
+                    holder.binding.recieverImage.visibility = View.GONE
+                }
+            }
         }
     }
 
@@ -49,6 +99,7 @@ class MessagingScreenAdapter(val context : Context,val arraylist : ArrayList<Mes
 
 
     inner class ViewHolder(val binding : ChatingItemDesignBinding) : RecyclerView.ViewHolder(binding.root)
+
 
 
 }

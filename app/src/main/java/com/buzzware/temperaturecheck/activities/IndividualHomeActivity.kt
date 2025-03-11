@@ -5,11 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
 import android.view.View
-import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -20,10 +15,10 @@ import com.buzzware.temperaturecheck.databinding.ActivityHomeBinding
 import com.buzzware.temperaturecheck.fragments.ChatFragment
 import com.buzzware.temperaturecheck.fragments.CheckInFragment
 import com.buzzware.temperaturecheck.fragments.CommunityFragment
-import com.buzzware.temperaturecheck.fragments.HomeFragment
 import com.buzzware.temperaturecheck.fragments.IndividualHomeFragment
 import com.buzzware.temperaturecheck.fragments.InviteCommunityFragment
 import com.buzzware.temperaturecheck.fragments.ProfileFragment
+import com.buzzware.temperaturecheck.model.GroupModel
 import com.buzzware.temperaturecheck.model.UserModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -38,6 +33,7 @@ class IndividualHomeActivity : BaseActivity(), IndividualHomeFragment.ItemClickL
     }
     private lateinit var googleSignInClient: GoogleSignInClient
 
+    private var requestList : ArrayList<GroupModel>? = ArrayList<GroupModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +44,10 @@ class IndividualHomeActivity : BaseActivity(), IndividualHomeFragment.ItemClickL
         if (User_Id != "")
         {
             getUserData(User_Id)
+        }
+
+        if (Constants.intentUserID != ""){
+            startActivity(Intent(this, GroupInvitationActivity::class.java))
         }
 
         setDrawer()
@@ -61,25 +61,34 @@ class IndividualHomeActivity : BaseActivity(), IndividualHomeFragment.ItemClickL
 
     private fun getInvitationData() {
 
+
         db.collection("Groups").addSnapshotListener { snapshots, error ->
             if (error != null) {
                 showAlert(error.message)
                 return@addSnapshotListener
             }
+            requestList?.clear()
 
             if (snapshots != null) {
                 var count = 0
 
                 for (document in snapshots.documents) {
+
                     val comunityMap = document.get("comunity") as? Map<String, String>
-                    if (comunityMap?.get(Constants.currentUser.id) == "requested") {
+                    if (comunityMap?.get(Constants.currentUser.id) == "requested"){
                         count++
+                        val model = document.toObject(GroupModel::class.java)
+                        requestList?.add(model!!)
+
                     }
                 }
                 if (count != 0)
                 {
                     binding.navView.notification.visibility = View.VISIBLE
                     binding.navView.notification.text = count.toString()
+                }else
+                {
+                    binding.navView.notification.visibility = View.GONE
                 }
 
             }
@@ -146,7 +155,20 @@ class IndividualHomeActivity : BaseActivity(), IndividualHomeFragment.ItemClickL
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        binding.titleTV.text = "Temperature-Check"
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        binding.titleTV.text = "Temperature-Check"
+    }
+
     private fun setView() {
+
+        binding.titleTV.text = "Temperature-Check"
+
 
         loadFragment(IndividualHomeFragment())
 
@@ -181,7 +203,7 @@ class IndividualHomeActivity : BaseActivity(), IndividualHomeFragment.ItemClickL
         }
         binding.navView.communityLayout.setOnClickListener {
             checkOpenOrCloseDrawer()
-            setInviteCommunityFragment()
+            setInviteCommunityFragment(requestList)
         }
         binding.navView.myCommunityLayout.setOnClickListener {
             checkOpenOrCloseDrawer()
@@ -207,15 +229,18 @@ class IndividualHomeActivity : BaseActivity(), IndividualHomeFragment.ItemClickL
             startActivity(Intent(this, FindTherapistActivity::class.java))
             overridePendingTransition(fadeIn, fadeOut)
         }
+        binding.navView.logOut.setOnClickListener {
+            mAuth.signOut()
+            val intent = Intent(this,LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(intent)
+        }
 
         binding.logoutIV.setOnClickListener {
-            googleSignInClient.signOut().addOnCompleteListener {
-                mAuth.signOut()
-                val intent = Intent(this,LoginActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                startActivity(intent)
-            }
-
+            mAuth.signOut()
+            val intent = Intent(this,LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(intent)
         }
 
     }
@@ -242,11 +267,11 @@ class IndividualHomeActivity : BaseActivity(), IndividualHomeFragment.ItemClickL
         loadFragmentBackStack(CommunityFragment())
     }
 
-    private fun setInviteCommunityFragment() {
+    private fun setInviteCommunityFragment(requestList: ArrayList<GroupModel>?) {
         binding.titleTV.text = "Community Invitation"
         binding.profileIV.visibility = View.GONE
         binding.logoutIV.visibility = View.GONE
-        loadFragmentBackStack(InviteCommunityFragment())
+        loadFragmentBackStack(InviteCommunityFragment(requestList))
     }
 
     private fun setProfileFragment() {
@@ -286,6 +311,14 @@ class IndividualHomeActivity : BaseActivity(), IndividualHomeFragment.ItemClickL
 
     override fun onCheckInClick() {
         setCheckInFragment()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val currentFragment = supportFragmentManager.findFragmentById(R.id.container)
+        when (currentFragment){
+            is IndividualHomeFragment ->{binding.titleTV.text = "Temperature-Check"}
+        }
     }
 
 }

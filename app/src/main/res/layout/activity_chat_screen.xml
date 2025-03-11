@@ -71,8 +71,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingVertical="@dimen/_10sdp"
-            android:paddingHorizontal="@dimen/_4sdp"
+            android:paddingHorizontal="@dimen/_3sdp"
             android:layout_marginHorizontal="@dimen/_15sdp"
+            android:inputType="textCapSentences|textMultiLine"
+            android:imeOptions="actionSend"
+            android:importantForAutofill="no"
             android:background="@drawable/chatingbg"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -84,10 +87,22 @@
             android:layout_height="@dimen/_18sdp"
             android:src="@drawable/send"
             app:tint="@color/cyan_color"
-            android:layout_marginHorizontal="@dimen/_8sdp"
+            android:layout_marginHorizontal="@dimen/_4sdp"
             app:layout_constraintBottom_toBottomOf="@+id/messageTypingET"
             app:layout_constraintEnd_toEndOf="@+id/messageTypingET"
             app:layout_constraintTop_toTopOf="@+id/messageTypingET" />
+
+        <ImageView
+            android:id="@+id/galleryIV"
+            android:layout_width="@dimen/_22sdp"
+            android:layout_height="@dimen/_22sdp"
+            android:layout_marginHorizontal="@dimen/_8sdp"
+            android:src="@drawable/image_icon"
+            app:layout_constraintBottom_toBottomOf="@+id/messageTypingET"
+            app:layout_constraintEnd_toStartOf="@+id/sendIV"
+            app:layout_constraintTop_toTopOf="@+id/messageTypingET"
+            app:tint="@color/cyan_color" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

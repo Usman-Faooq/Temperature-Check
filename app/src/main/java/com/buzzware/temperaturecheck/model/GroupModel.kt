@@ -11,4 +11,6 @@ data class GroupModel(
     var name : String = "",
     var pm_id : HashMap<String,String> = hashMapOf(),
     var userId : String = "",
+    var userName : String = "",
+    var image : String = "",
     )

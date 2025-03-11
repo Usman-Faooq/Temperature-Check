@@ -5,5 +5,6 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="google_api_key">AIzaSyAq8k2ls3qfCXP1OzsQ2T5HbYvWo3HaPDk</string>
 
 </resources>

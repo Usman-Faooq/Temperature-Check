@@ -6,63 +6,107 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/recieverItem"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/reciveLayout"
+        android:layout_width="@dimen/_150sdp"
         android:layout_height="wrap_content"
-        android:background="@drawable/round_custom_alert_bg"
-        android:backgroundTint="@color/cyan_color"
-        android:fontFamily="@font/montserrat_medium"
-        android:paddingHorizontal="@dimen/_15sdp"
-        android:paddingVertical="@dimen/_8sdp"
-        android:text="aaaaaaaaaaaaaaaaaa"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/recieverItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_custom_alert_bg"
+            android:backgroundTint="@color/cyan_color"
+            android:fontFamily="@font/montserrat_medium"
+            android:paddingHorizontal="@dimen/_15sdp"
+            android:paddingVertical="@dimen/_8sdp"
+            android:text="aaaaaaaaaaaaaaaaaa"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
-    <TextView
-        android:id="@+id/recieverItemTime"
-        android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/recieverImage"
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="@dimen/_150sdp"
+            android:fontFamily="@font/montserrat_medium"
+            android:src="@drawable/testimage"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/recieverItemTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_6sdp"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:fontFamily="@font/montserrat_medium"
+            android:text="01:20 pm"
+            android:textSize="@dimen/_8sdp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/recieverItem"
+            app:layout_constraintTop_toBottomOf="@+id/recieverItem" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/myLayout"
+        android:layout_width="@dimen/_150sdp"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/montserrat_medium"
-        android:layout_marginTop="@dimen/_4sdp"
-        android:text="01:20 pm"
-        android:layout_marginLeft="@dimen/_6sdp"
-        android:textSize="@dimen/_8sdp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/recieverItem"
-        app:layout_constraintTop_toBottomOf="@+id/recieverItem" />
-
-
-    <TextView
-        android:id="@+id/senderItemTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/montserrat_medium"
-        android:layout_marginTop="@dimen/_4sdp"
-        android:text="01:20 pm"
-        android:layout_marginRight="@dimen/_6sdp"
-        android:textSize="@dimen/_8sdp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/senderItem"
-        app:layout_constraintTop_toBottomOf="@+id/senderItem" />
-
-    <TextView
-        android:id="@+id/senderItem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/round_custom_alert_bg"
-        android:backgroundTint="@color/blue_dark"
-        android:fontFamily="@font/montserrat_medium"
-        android:paddingHorizontal="@dimen/_15sdp"
-        android:paddingVertical="@dimen/_8sdp"
-        android:text="waqas sssssssssssssssss"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <TextView
+            android:id="@+id/senderItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_custom_alert_bg"
+            android:backgroundTint="@color/blue_dark"
+            android:fontFamily="@font/montserrat_medium"
+            android:paddingHorizontal="@dimen/_15sdp"
+            android:paddingVertical="@dimen/_8sdp"
+            android:text="sssssssssssssssss"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/senderImage"
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="@dimen/_150sdp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/testimage"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/senderItemTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:layout_marginRight="@dimen/_6sdp"
+            android:fontFamily="@font/montserrat_medium"
+            android:text="01:20 pm"
+            android:textSize="@dimen/_8sdp"
+            android:layout_marginVertical="@dimen/_4sdp"
+            android:textStyle="bold"
+            android:layout_gravity="end"
+            app:layout_constraintEnd_toEndOf="@+id/senderImage"
+            app:layout_constraintTop_toBottomOf="@+id/senderImage" />
+
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

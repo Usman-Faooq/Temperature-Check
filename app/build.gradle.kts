@@ -53,6 +53,7 @@ dependencies {
     implementation(libs.firebase.messaging.ktx)
     implementation(libs.firebase.auth)
     implementation(libs.androidx.recyclerview)
+    implementation(libs.firebase.storage.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -72,9 +73,17 @@ dependencies {
 
 
     implementation("com.google.android.gms:play-services-auth:20.7.0")
+    implementation("com.google.android.gms:play-services-maps:19.1.0")
+    implementation("com.google.android.libraries.places:places:4.1.0")
+
 
 
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
+
+    //imagePicker
+    implementation("com.github.dhaval2404:imagepicker:2.1")
+
 
 
 

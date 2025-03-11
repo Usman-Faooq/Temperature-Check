@@ -18,6 +18,7 @@
     <color name="uneasy">#CDDC39</color>
     <color name="sad">#F85F32</color>
     <color name="angry">#F83232</color>
+    <color name="transparent">#00000000</color>
 
 
 </resources>

@@ -9,6 +9,7 @@ import com.buzzware.temperaturecheck.R
 import com.buzzware.temperaturecheck.adapters.QuestionAdapter
 import com.buzzware.temperaturecheck.classes.Constants
 import com.buzzware.temperaturecheck.databinding.ActivityStartCheckInBinding
+import com.buzzware.temperaturecheck.model.QuestionModel
 import com.buzzware.temperaturecheck.model.UserQuestionModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -21,12 +22,12 @@ class StartCheckInActivity : BaseActivity(), QuestionAdapter.QuestionInterface {
     private val binding : ActivityStartCheckInBinding by lazy {
         ActivityStartCheckInBinding.inflate(layoutInflater)
     }
-    lateinit var questionAdapter : QuestionAdapter
-    var user_mode : Int = 0
-    private var questionList : ArrayList<String> = ArrayList()
-    val calendar = Calendar.getInstance()
-    var pastDaysDate : String = ""
-    var periodOfDay : String = ""
+    private lateinit var questionAdapter : QuestionAdapter
+    private var user_mode : Int = 0
+    private var adapterQuestionArray : ArrayList<QuestionModel> = ArrayList()
+    private val calendar = Calendar.getInstance()
+    private var pastDaysDate : String = ""
+    private var periodOfDay : String = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,87 +39,101 @@ class StartCheckInActivity : BaseActivity(), QuestionAdapter.QuestionInterface {
 
         pastDaysDate = intent.getStringExtra("missDate") ?: ""
 
-
+        Log.d("LOGGER", "Update previous Record: $pastDaysDate")
         if (pastDaysDate.isNotEmpty())
         {
             Constants.answerList.clear()
             binding.titleTV.text = intent.getStringExtra("missDate")
-            questionList.addAll(listOf("How did you sleep?", "How do you feel about yourself today?",
-                "Are you looking forward to today?"
-            ,"How's your day going?"
-            ,"How did you feel about your day"))
+            adapterQuestionArray.add(QuestionModel(0,"How did you sleep?", "", UUID.randomUUID().toString()))
+            adapterQuestionArray.add(QuestionModel(1,"How do you feel about yourself today?", "", UUID.randomUUID().toString()))
+            adapterQuestionArray.add(QuestionModel(2,"Are you looking forward to today?", "", UUID.randomUUID().toString()))
+            adapterQuestionArray.add(QuestionModel(3,"How's your day going?", "", UUID.randomUUID().toString()))
+            adapterQuestionArray.add(QuestionModel(4,"How did you feel about your day", "", UUID.randomUUID().toString()))
+
+            setView()
         }else{
             getCurrentTime()
         }
 
-        setView()
         setListener()
 
     }
 
-    private fun updatePrevousRecord(pastDaysDate: String) {
-        var count = 0
-        Constants.answerList.values.forEachIndexed { index, s ->
-
-            val model = UserQuestionModel(s, convertToTimestamp(pastDaysDate), pastDaysDate, UUID.randomUUID().toString(), questionList[index], index.toLong(), binding.titleTV.text.toString(), Constants.currentUser.id)
-
-            db.collection("UserQuestions").document(model.id)
-                .set(model).addOnSuccessListener {
-                    count++
-                    if (count == Constants.answerList.size){
-                        val intent = Intent(this, MyTempResultActivity::class.java)
-                        intent.putExtra("User_Mode",user_mode)
-                        intent.putExtra("total",questionList.size)
-                        startActivity(intent)
-                        overridePendingTransition(fadeIn, fadeOut)
-                    }
-
-                }.addOnFailureListener {
-                    count++
-                    if (count == Constants.answerList.size){
-                        val intent = Intent(this, MyTempResultActivity::class.java)
-                        intent.putExtra("User_Mode",user_mode)
-                        intent.putExtra("total",questionList.size)
-                        startActivity(intent)
-                        overridePendingTransition(fadeIn, fadeOut)
-                    }
-                }
-        }
-
-    }
-
-
     private fun getCurrentTime() {
-
-        questionList.clear()
+        mDialog.show()
+        adapterQuestionArray.clear()
         val currentTime = calendar.get(Calendar.HOUR_OF_DAY)
+
+        val checkQuestionArray: List<String>
+
         when (currentTime) {
             in 0..19 -> {
-                questionList.add("How did you sleep?")
-                questionList.add("How do you feel about yourself today?")
-                questionList.add("Are you looking forward to today?")
                 binding.titleTV.text = "Morning Questions"
                 periodOfDay = "Morning"
+                checkQuestionArray = listOf("How did you sleep?", "How do you feel about yourself today?", "Are you looking forward to today?")
             }
-            in 20 ..22 -> {
-                questionList.add("How's your day going?")
+            in 20..22 -> {
                 binding.titleTV.text = "Afternoon Questions"
                 periodOfDay = "Afternoon"
+                checkQuestionArray = listOf("How's your day going?")
             }
             else -> {
-                questionList.add("How did you feel about your day?")
                 binding.titleTV.text = "Evening Questions"
                 periodOfDay = "Evening"
+                checkQuestionArray = listOf("How did you feel about your day?")
             }
+        }
+
+        var completedQueries = 0
+        val totalQueries = checkQuestionArray.size
+
+        Log.d("LOGGER", "checkQustion Size: ${checkQuestionArray.size}")
+        checkQuestionArray.forEachIndexed { index, question ->
+            db.collection("UserQuestions")
+                .whereEqualTo("question", question)
+                .whereEqualTo("userId", Constants.currentUser.id)
+                .get().addOnSuccessListener { result ->
+                    Log.d("LOGGER", "Result Size: ${result.size()}")
+
+                    var isSameDayFound = false // Track if a same-day record exists
+
+                    result.forEach { doc ->
+                        val model = doc.toObject(UserQuestionModel::class.java)
+                        Log.d("LOGGER", "Doc ID: ${doc.id}")
+                        if (isSameDay(model.date.toLong(), System.currentTimeMillis())) {
+                            Log.d("LOGGER", "is Same Day Added")
+                            adapterQuestionArray.add(QuestionModel(index, question, model.answer, model.id))
+                            isSameDayFound = true
+                        }
+                    }
+
+                    if (!isSameDayFound) {
+                        Log.d("LOGGER", "No same day record found, adding new one")
+                        adapterQuestionArray.add(QuestionModel(index, question, "", UUID.randomUUID().toString()))
+                    }
+
+                    completedQueries++
+                    if (completedQueries == totalQueries) {
+                        setView()
+                    }
+                }.addOnFailureListener {
+                    adapterQuestionArray.add(QuestionModel(index, question, "", UUID.randomUUID().toString()))
+                    completedQueries++
+                    if (completedQueries == totalQueries) {
+                        setView()
+                    }
+                }
         }
     }
 
     private fun setView() {
-
+        Log.d("LOGGER", "adpater size: ${adapterQuestionArray.size}")
+        if (mDialog.isShowing) mDialog.dismiss()
         binding.questionVP.isUserInputEnabled = false
-        questionAdapter = QuestionAdapter(this, questionList, this)
+        questionAdapter = QuestionAdapter(this, adapterQuestionArray, this)
         binding.questionVP.adapter = questionAdapter
-        updateCurrentPosition(binding.questionVP.currentItem + 1, questionList.size)
+        questionAdapter.notifyDataSetChanged() // Ensure UI updates
+        updateCurrentPosition(binding.questionVP.currentItem + 1, adapterQuestionArray.size)
 
     }
 
@@ -129,38 +144,36 @@ class StartCheckInActivity : BaseActivity(), QuestionAdapter.QuestionInterface {
         binding.nextLayout.setOnClickListener {
             val currentItem = binding.questionVP.currentItem
 
-            Log.d("TAG12345", "Before Increment: ${Constants.answerList}")
-
-            if (Constants.answerList[currentItem].isNullOrEmpty()) {
+            if (Constants.answerList[currentItem]?.selectedAnswer.isNullOrEmpty()) {
                 showToast("Please select an answer")
                 return@setOnClickListener
             }
 
-            if (currentItem < questionList.size - 1) {
+            if (currentItem < adapterQuestionArray.size - 1) {
                 binding.questionVP.currentItem = currentItem + 1
                 user_mode += questionAdapter.mode
-                updateCurrentPosition(binding.questionVP.currentItem + 1, questionList.size)
+                updateCurrentPosition(binding.questionVP.currentItem + 1, adapterQuestionArray.size)
 
-                binding.nextTV.text = if (binding.questionVP.currentItem == questionList.size - 1) "Complete" else "Next"
+                binding.nextTV.text = if (binding.questionVP.currentItem == adapterQuestionArray.size - 1) "Complete" else "Next"
             } else {
                 user_mode += questionAdapter.mode
                 if (pastDaysDate.isNotEmpty()) {
                     updatePreviousRecord(pastDaysDate)
+                    Log.d("LOGGER", "Update previous Record")
                 } else {
+                    Log.d("LOGGER", "Update current record")
                     addToDaysQuestionsAns()
                 }
             }
-
-            Log.d("TAG12345", "After Increment: ${Constants.answerList}")
         }
 
         binding.backLayout.setOnClickListener {
             val currentItem = binding.questionVP.currentItem
             if (currentItem > 0) {
                 binding.questionVP.currentItem = currentItem - 1
-                updateCurrentPosition(binding.questionVP.currentItem + 1, questionList.size)
+                updateCurrentPosition(binding.questionVP.currentItem + 1, adapterQuestionArray.size)
 
-                if (binding.questionVP.currentItem < questionList.size - 1) {
+                if (binding.questionVP.currentItem < adapterQuestionArray.size - 1) {
                     binding.nextTV.text = "Next"
                 }
             } else {
@@ -171,29 +184,21 @@ class StartCheckInActivity : BaseActivity(), QuestionAdapter.QuestionInterface {
 
     }
 
-    private fun addToDaysQuestionsAns()
-    {
+    private fun addToDaysQuestionsAns() {
         var count = 0
-        var id : String = ""
         Constants.answerList.forEach { (key, value) ->
-//            if (questionAdapter.questionId.isNotEmpty())
-//            {
-//                id = questionAdapter.questionId.toString()
-//            }else{
-//
-//                id = UUID.randomUUID().toString()
-//            }
-//            questionAdapter.questionId
 
-            val model = UserQuestionModel(value, System.currentTimeMillis().toString(), getCurrentDate(), UUID.randomUUID().toString() , questionList[key], key.toLong(), periodOfDay, Constants.currentUser.id)
+            val model = UserQuestionModel(value.selectedAnswer, System.currentTimeMillis(), getCurrentDate(), value.currentId , value.question, key.toLong(), periodOfDay, Constants.currentUser.id)
 
-            db.collection("UserQuestions").document(model.id)
+            db.collection("UserQuestions").document(value.currentId)
                 .set(model).addOnSuccessListener {
                     count++
                     if (count == Constants.answerList.size){
                         val intent = Intent(this, MyTempResultActivity::class.java)
+                        intent.putExtra("userModel", Constants.currentUser)
+                        intent.putParcelableArrayListExtra("questions_list", Constants.currentUserQuestion)
                         intent.putExtra("User_Mode",user_mode)
-                        intent.putExtra("total",questionList.size)
+                        intent.putExtra("total",adapterQuestionArray.size)
                         startActivity(intent)
                         overridePendingTransition(fadeIn, fadeOut)
                     }
@@ -202,8 +207,10 @@ class StartCheckInActivity : BaseActivity(), QuestionAdapter.QuestionInterface {
                     count++
                     if (count == Constants.answerList.size){
                         val intent = Intent(this, MyTempResultActivity::class.java)
+                        intent.putExtra("userModel", Constants.currentUser)
+                        intent.putParcelableArrayListExtra("questions_list", Constants.currentUserQuestion)
                         intent.putExtra("User_Mode",user_mode)
-                        intent.putExtra("total",questionList.size)
+                        intent.putExtra("total",adapterQuestionArray.size)
                         startActivity(intent)
                         overridePendingTransition(fadeIn, fadeOut)
                     }
@@ -239,19 +246,32 @@ class StartCheckInActivity : BaseActivity(), QuestionAdapter.QuestionInterface {
         overridePendingTransition(fadeIn, fadeOut)
     }
 
-    override fun onAnswerClicked(feel: String) {
+    override fun onAnswerClicked() {
+        val currentItem = binding.questionVP.currentItem
+        if (currentItem < adapterQuestionArray.size - 1) {
+            binding.questionVP.currentItem = currentItem + 1
+            user_mode += questionAdapter.mode
+            updateCurrentPosition(binding.questionVP.currentItem + 1, adapterQuestionArray.size)
 
+            binding.nextTV.text = if (binding.questionVP.currentItem == adapterQuestionArray.size - 1) "Complete" else "Next"
+        }
     }
 
     private fun updatePreviousRecord(pastDaysDate: String) {
         var count = 0
+
+        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val date = sdf.parse(pastDaysDate)
+
+        val timestamp = date?.time ?: 0L
+
         Constants.answerList.forEach { (index, value) ->
             val model = UserQuestionModel(
-                value,
-                convertToTimestamp(pastDaysDate),
+                value.selectedAnswer,
+                timestamp,
                 pastDaysDate,
-                UUID.randomUUID().toString(),
-                questionList[index],
+                value.currentId,
+                value.question,
                 index.toLong(),
                 binding.titleTV.text.toString(),
                 Constants.currentUser.id
@@ -276,8 +296,10 @@ class StartCheckInActivity : BaseActivity(), QuestionAdapter.QuestionInterface {
 
     private fun navigateToResult() {
         val intent = Intent(this, MyTempResultActivity::class.java)
+        intent.putExtra("userModel", Constants.currentUser)
+        intent.putParcelableArrayListExtra("questions_list", Constants.currentUserQuestion)
         intent.putExtra("User_Mode", user_mode)
-        intent.putExtra("total", questionList.size)
+        intent.putExtra("total", adapterQuestionArray.size)
         startActivity(intent)
         overridePendingTransition(fadeIn, fadeOut)
     }

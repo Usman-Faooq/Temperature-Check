@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.buzzware.temperaturecheck.classes.Constants
 import com.buzzware.temperaturecheck.databinding.PersonalChatItemDesignBinding
 import com.buzzware.temperaturecheck.fragments.BaseFragment
 import com.buzzware.temperaturecheck.model.ChatModel
@@ -46,7 +47,7 @@ class GroupChatingAdapter(val context: Context?, val arrayList : ArrayList<ChatM
     private fun LeaveGroup(chatId: String?) {
 
         val updates = hashMapOf<String, Any>(
-            "participants.cJsN8ylqXTRl1TeV4dRTS2M3Y7E3" to FieldValue.delete()
+            "participants.${Constants.currentUser.id}" to FieldValue.delete()
         )
 
         FirebaseFirestore.getInstance().collection("Chat")

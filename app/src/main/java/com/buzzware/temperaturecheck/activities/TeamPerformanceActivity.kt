@@ -29,7 +29,7 @@ class TeamPerformanceActivity : BaseActivity() {
     private fun setView() {
 
         binding.recyclerView2.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        binding.recyclerView2.adapter = TeamAdapter(this, arrayListOf())
+            //binding.recyclerView2.adapter = TeamAdapter(this, arrayListOf())
 
 
     }

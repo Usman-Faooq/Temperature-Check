@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -20,28 +21,40 @@
 
     <TextView
         android:id="@+id/userName"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_4sdp"
         android:fontFamily="@font/montserrat_medium"
         android:text="Harry Styles"
         android:textSize="@dimen/_14sdp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/acceptedTV"
         app:layout_constraintStart_toEndOf="@+id/userRoundedImageView"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/groupName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_4sdp"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="Harry Styles"
+        android:textSize="@dimen/_14sdp"
+        app:layout_constraintEnd_toStartOf="@+id/acceptedTV"
+        app:layout_constraintStart_toEndOf="@+id/userRoundedImageView"
+        app:layout_constraintTop_toBottomOf="@+id/userName" />
+
 
     <TextView
-        android:id="@+id/requestBtn"
+        android:id="@+id/acceptedTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/round_custom_alert_bg"
         android:backgroundTint="@color/blue_dark"
         android:fontFamily="@font/montserrat_medium"
-        android:text="Request"
         android:paddingHorizontal="@dimen/_15sdp"
         android:paddingVertical="@dimen/_7sdp"
+        android:text="Accept"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -18,6 +18,7 @@ import com.buzzware.temperaturecheck.databinding.ShowCustomeAlertBinding
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import java.util.Calendar
 
 open class BaseActivity : AppCompatActivity() {
 
@@ -86,6 +87,14 @@ open class BaseActivity : AppCompatActivity() {
 
     fun setStatusBarColor(colorResId: Int) {
         window.statusBarColor = resources.getColor(colorResId, theme)
+    }
+
+    fun isSameDay(timestamp1: Long, timestamp2: Long): Boolean {
+        val calendar1 = Calendar.getInstance().apply { timeInMillis = timestamp1 }
+        val calendar2 = Calendar.getInstance().apply { timeInMillis = timestamp2 }
+
+        return calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR) &&
+                calendar1.get(Calendar.DAY_OF_YEAR) == calendar2.get(Calendar.DAY_OF_YEAR)
     }
 
 }

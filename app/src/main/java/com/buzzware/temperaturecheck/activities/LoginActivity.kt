@@ -1,12 +1,20 @@
 package com.buzzware.temperaturecheck.activities
 
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.view.Window
 import android.widget.Toast
 import com.buzzware.temperaturecheck.R
 import com.buzzware.temperaturecheck.classes.Constants
 import com.buzzware.temperaturecheck.databinding.ActivityLoginBinding
+import com.buzzware.temperaturecheck.databinding.ForgetPasswordAlertDialogueBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -67,6 +75,52 @@ class LoginActivity : BaseActivity() {
             signInWithGoogle()
         }
 
+
+        binding.forgetPassword.setOnClickListener {
+            showForgetALert()
+        }
+
+    }
+
+    private fun showForgetALert() {
+
+        val dialog = Dialog(this)
+        dialog.setCancelable(true)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        val dialogBinding = ForgetPasswordAlertDialogueBinding.inflate(LayoutInflater.from(this))
+        dialog.setContentView(dialogBinding.root)
+        dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.setGravity(Gravity.CENTER)
+
+        dialogBinding.yesTV.setOnClickListener {
+            if (dialogBinding.emailTV.text.isNotEmpty())
+            {
+                sendPasswordResetEmail(dialogBinding.emailTV.text.toString())
+                dialog.dismiss()
+            }
+            else
+            {
+                showAlert("Please enter Email")
+            }
+        }
+        dialogBinding.NoTV.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
+
+    }
+
+    private fun sendPasswordResetEmail(email: String) {
+        mAuth.sendPasswordResetEmail(email)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    showAlert("Reset link sent to your email!")
+                } else {
+                    Toast.makeText(this, "Error: ${task.exception?.message}", Toast.LENGTH_LONG).show()
+                }
+            }
     }
 
     private fun signInUser() {
@@ -104,8 +158,10 @@ class LoginActivity : BaseActivity() {
 
 
     private fun signInWithGoogle() {
-        val signInIntent = googleSignInClient.signInIntent
-        startActivityForResult(signInIntent, 9001)
+        googleSignInClient.signOut().addOnCompleteListener {
+            val signInIntent = googleSignInClient.signInIntent
+            startActivityForResult(signInIntent, 9001)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -167,6 +223,7 @@ class LoginActivity : BaseActivity() {
             "image" to account?.photoUrl,
             "deviceType" to "Android",
             "userRole" to "user",
+            "groupCount" to 0,
             "isApproved" to false,
             "isOnline" to true,
             "isSubsCribed" to true,
